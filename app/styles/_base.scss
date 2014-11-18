@@ -5,3 +5,13 @@ body, html {
     height: 100%;
     background: #efefef;
 }
+
+body {
+	font-family: 'Nunito', sans-serif;
+	min-width: 720px;
+}
+
+* {
+    @include box-sizing(border-box);
+    position: relative;
+}
