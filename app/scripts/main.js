@@ -9,6 +9,14 @@ $(document).ready(function(){
 	var heroVideoEl = $heroVideo[0];
 	var $body = $('.body');
 
+	var $playButton = $('.button-play');
+	var $muteButton = $('.button-mute');
+
+	var $primaryNav = $('.nav-primary');
+
+	var heroVideoVolume = 1;
+	window.volume = heroVideoVolume;
+
 	var _onResize = function _onResize() {
 		_resizeVideo();
 		
@@ -56,12 +64,25 @@ $(document).ready(function(){
 		});
 	};
 
-	$hero.on('click', function(){
+	// Primary navigation
+	$primaryNav.on('click', function(e) {
+
+	});
+
+	// Hero video controls
+	$playButton.on('click', function(e){
 		if(heroVideoEl.paused) {
 			heroVideoEl.play();
 		} else {
 			heroVideoEl.pause();
 		}
+	});
+	$muteButton.on('click', function(e){
+		heroVideoVolume = heroVideoVolume > 0 ? 0 : 1;
+		
+		TweenMax.to(window, 0.5, {volume: heroVideoVolume, onUpdate: function(){
+			heroVideoEl.volume = window.volume;
+		}});
 	});
 
 	$(window).on('resize', _onResize);

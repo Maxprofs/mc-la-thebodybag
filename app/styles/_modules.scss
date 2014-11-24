@@ -185,3 +185,30 @@
 	padding-bottom: 120px;
 	background: rgba(255, 255, 255, 0.4);
 }
+
+.video-controls {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	z-index: 100000;
+	cursor: pointer;
+}
+
+.button {
+	width: 60px;
+	height: 60px;
+	border: 1px solid #ffffff;
+	display: block;
+	user-select: none;
+}
+
+.button-play {
+	&:before {
+		content: "P";
+	}
+}
+.button-mute {
+	&:before {
+		content: "M";
+	}
+}
