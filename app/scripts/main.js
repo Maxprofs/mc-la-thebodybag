@@ -6,14 +6,12 @@ $(document).ready(function(){
 	var $hero = $('.hero');
 	var $heroMash = $('.mash');
 	var $heroVideo = $('.video-hero');
-	var heroVideoEl = $heroVideo[0];
 	var $body = $('.body');
-
 	var $playButton = $('.button-play');
 	var $muteButton = $('.button-mute');
-
 	var $primaryNav = $('.nav-primary');
 
+	var heroVideoEl = $heroVideo[0];
 	var heroVideoVolume = 1;
 	window.volume = heroVideoVolume;
 
@@ -66,15 +64,17 @@ $(document).ready(function(){
 
 	// Primary navigation
 	$primaryNav.on('click', function(e) {
-
+		
 	});
 
 	// Hero video controls
 	$playButton.on('click', function(e){
 		if(heroVideoEl.paused) {
 			heroVideoEl.play();
+			TweenMax.to(heroVideoEl, 0.5, {opacity: 1, ease: Expo.easeOut});
 		} else {
 			heroVideoEl.pause();
+			TweenMax.to(heroVideoEl, 0.5, {opacity: 0.6, ease: Expo.easeOut});
 		}
 	});
 	$muteButton.on('click', function(e){
@@ -86,7 +86,6 @@ $(document).ready(function(){
 	});
 
 	$(window).on('resize', _onResize);
-
 	setTimeout(function() {
 		_onResize();}, 100);
 });
