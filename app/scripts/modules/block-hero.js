@@ -85,18 +85,27 @@ define(
 				_this.els.$playButton.on('click', _onPlayButtonClick);
 				_this.els.$muteButton.on('click', _onMuteButtonClick);
 
-				heroVideoEl.pause();
+				heroVideoEl.addEventListener('ended', _onVideoFinished);
+
+				// heroVideoEl.pause();
+				if(heroVideoEl.paused) {
+					_this.els.$playButton.click();
+				}
+			};
+
+			function _onVideoFinished(e) {
+				_this.els.$playButton.removeClass('is-active');
 			};
 
 			function _onPlayButtonClick(e) {
 				if(heroVideoEl.paused) {
 					$(this).addClass('is-active');
 					heroVideoEl.play();
-					TweenMax.to(heroVideoEl, 0.5, {opacity: 1, ease: Expo.easeOut});
+					TweenMax.to(heroVideoEl, 1, {opacity: 1, ease: Expo.easeOut});
 				} else {
 					$(this).removeClass('is-active');
 					heroVideoEl.pause();
-					TweenMax.to(heroVideoEl, 0.5, {opacity: 0.6, ease: Expo.easeOut});
+					TweenMax.to(heroVideoEl, 1, {opacity: 0.6, ease: Expo.easeOut});
 				}
 			};
 
