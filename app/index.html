@@ -18,8 +18,8 @@
   </head>
   <body>
     <!-- Header -->
-    <section id="header">
-      <header class="header">
+    <section>
+      <header class="header" id="appHeader">
         <div class="logo-header"></div>
         <nav class="nav-primary">
           <ul class="list list-inline">
@@ -31,7 +31,7 @@
       </header>
     </section>
 
-    <section class="hero table-row">
+    <section class="hero table-row" id="hero">
       <div class="mash"></div>
       <video class="video-hero" src="videos/mc-la-hero.mp4" autoplay="autoplay" loop></video>
       <ul class="video-controls list list-inline">
@@ -58,7 +58,7 @@
       </section>
     </section>
 
-    <section id="footer" class="footer">
+    <section id="appFooter" class="footer">
       <nav class="nav-social">
           <ul class="list list-inline">
             <li>
@@ -170,28 +170,10 @@
             </li>
           </ul>
       </nav>
-    </section>    
+    </section>
 
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/fastclick/lib/fastclick.js"></script>
-    <script src="bower_components/greensock/src/uncompressed/TweenMax.js"></script>
-    <!-- endbower -->
+    <!-- build:js({.tmp}) scripts/application.js -->
+    <script type="text/javascript" src="scripts/application.js"></script>
     <!-- endbuild -->
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='//www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');
-    </script>
-
-        <!-- build:js({app,.tmp}) scripts/main.js -->
-        <script src="scripts/main.js"></script>
-        <!-- endbuild -->
 </body>
 </html>

@@ -36,7 +36,7 @@ module.exports = function (grunt) {
       },
       js: {
         files: ['<%= config.app %>/scripts/{,*/}*.js'],
-        tasks: [],
+        tasks: ['requirejs:dev'],
         options: {
           livereload: true
         }
@@ -280,6 +280,43 @@ module.exports = function (grunt) {
       }
     },
 
+    requirejs: {
+      dev: {
+        options: {
+          baseUrl: '<%= config.app %>/scripts',
+          mainConfigFile: '<%= config.app %>/scripts/main.js',
+          almond: true,
+          include: ['main'],
+          name: '../../bower_components/almond/almond',
+          out: '.tmp/scripts/application.js',
+          wrap: true,
+          useStrict: true,
+          removeCombined: true,
+          generateSourceMaps: true,
+          findNestedDependencies: true,
+          preserveLicenseComments: true,
+          optimize: 'none'
+        }
+      },
+      dist: {
+        options: {
+          baseUrl: '<%= config.app %>/scripts',
+          mainConfigFile: '<%= config.app %>/scripts/main.js',
+          almond: true,
+          include: ['main'],
+          name: '../../bower_components/almond/almond',
+          out: '<%= config.dist %>/scripts/application.js',
+          wrap: true,
+          useStrict: true,
+          keepBuildDir: false,
+          removeCombined: true,
+          generateSourceMaps: false,
+          findNestedDependencies: true,
+          preserveLicenseComments: false
+        }
+      }
+    },
+
     // By default, your `index.html`'s <!-- Usemin block --> will take care
     // of minification. These next options are pre-configured if you do not
     // wish to use the Usemin blocks.
@@ -363,6 +400,7 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
+      'requirejs:dev',
       'autoprefixer',
       'connect:livereload',
       'watch'
@@ -394,6 +432,7 @@ module.exports = function (grunt) {
     'wiredep',
     'useminPrepare',
     'concurrent:dist',
+    'requirejs:dist',
     'autoprefixer',
     'concat',
     'cssmin',

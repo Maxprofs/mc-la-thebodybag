@@ -10,7 +10,9 @@
 		float: left;
 	}
 }
-
+#appHeader {
+	@include clearfix;
+}
 .header {
 	width: 100%;
 	height: $header-height;
@@ -19,6 +21,7 @@
 	background-color: $color-header-background;
 	z-index: 2000;
 	position: fixed;
+	@include clearfix;
 }
 .logo-header {
 	position: relative;

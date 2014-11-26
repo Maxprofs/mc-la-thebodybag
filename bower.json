@@ -7,6 +7,9 @@
     "greensock": "~1.14.2",
     "bower-neat": "~1.5.0",
     "normalize-scss": "~3.0.2",
-    "bower-bourbon": "~3.1.8"
-  }
+    "bower-bourbon": "~3.1.8",
+    "almond": "~0.3.0",
+    "js-signals": "~1.0.0"
+  },
+  "devDependencies": {}
 }
