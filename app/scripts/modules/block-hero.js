@@ -84,13 +84,17 @@ define(
 				// Hero video controls
 				_this.els.$playButton.on('click', _onPlayButtonClick);
 				_this.els.$muteButton.on('click', _onMuteButtonClick);
+
+				heroVideoEl.pause();
 			};
 
 			function _onPlayButtonClick(e) {
 				if(heroVideoEl.paused) {
+					$(this).addClass('is-active');
 					heroVideoEl.play();
 					TweenMax.to(heroVideoEl, 0.5, {opacity: 1, ease: Expo.easeOut});
 				} else {
+					$(this).removeClass('is-active');
 					heroVideoEl.pause();
 					TweenMax.to(heroVideoEl, 0.5, {opacity: 0.6, ease: Expo.easeOut});
 				}
@@ -99,6 +103,12 @@ define(
 			function _onMuteButtonClick(e) {
 				heroVideoVolume = heroVideoVolume > 0 ? 0 : 1;
 				
+				if(heroVideoVolume < 1) {
+					$(this).addClass('is-active');
+				} else {
+					$(this).removeClass('is-active');
+				}
+
 				TweenMax.to(window, 0.5, {volume: heroVideoVolume, onUpdate: function(){
 					heroVideoEl.volume = window.volume;
 				}});

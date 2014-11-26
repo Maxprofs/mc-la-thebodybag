@@ -200,26 +200,3 @@
 		margin-right: $video-controls-margin;
 	}
 }
-
-.button {
-	width: $video-button-size;
-	height: $video-button-size;
-	border: 1px solid #ffffff;
-	display: block;
-	user-select: none;
-	line-height: $video-button-size;
-	vertical-align: middle;
-	text-align: center;
-	cursor: pointer;
-}
-
-.button-play {
-	&:before {
-		content: "P";
-	}
-}
-.button-mute {
-	&:before {
-		content: "M";
-	}
-}

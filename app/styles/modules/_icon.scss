@@ -1,0 +1,16 @@
+.icon {
+	position: absolute;
+	display: block;
+	width: 90%;
+	height: 90%;
+	top: 5%;
+	left: 5%;
+}
+
+.icon-active {
+	@extend .icon;
+
+	@include transition-property(opacity);
+	@include transition-duration(0.2s);
+    @include transition-timing-function($ease-out-quart);
+}

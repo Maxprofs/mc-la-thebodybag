@@ -1,0 +1,66 @@
+
+
+.button {
+	width: $video-button-size;
+	height: $video-button-size;
+	// border: 1px solid #ffffff;
+	display: block;
+	user-select: none;
+	line-height: $video-button-size;
+	vertical-align: middle;
+	text-align: center;
+	cursor: pointer;
+
+	.icon {
+		opacity: 1;
+	}
+	.icon-active {
+		opacity: 0;
+	}
+
+	&:hover {
+		border-color: $color-link-active;
+
+		.icon {
+			opacity: 0;
+		}
+		.icon-active {
+			opacity: 1;
+		}
+	}
+}
+
+.button-play {
+	.icon {
+		background: inline-image("svg/icon-media-play.svg");
+	}
+	.icon-active {
+		background: inline-image("svg/icon-media-play-active.svg");
+	}
+
+	&.is-active {
+		.icon {
+			background: inline-image("svg/icon-media-pause.svg");
+		}
+		.icon-active {
+			background: inline-image("svg/icon-media-pause-active.svg");
+		}
+	}
+}
+.button-mute {
+	.icon {
+		background: inline-image("svg/icon-media-sound-on.svg");
+	}
+	.icon-active {
+		background: inline-image("svg/icon-media-sound-on-active.svg");
+	}
+
+	&.is-active {
+		.icon {
+			background: inline-image("svg/icon-media-sound-off.svg");
+		}
+		.icon-active {
+			background: inline-image("svg/icon-media-sound-off-active.svg");
+		}
+	}
+}
