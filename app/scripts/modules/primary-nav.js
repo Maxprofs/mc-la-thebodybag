@@ -30,6 +30,8 @@ define(
 
 			function _init() {
 				_this.els.$buttons.on('click', _onSelect);
+
+				_this.activateButton(0);
 			};
 
 			function _onSelect(e) {

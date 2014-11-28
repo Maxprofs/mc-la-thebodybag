@@ -94,11 +94,15 @@ define(
 		    };
 
 		    function _onNavbarSelected() {
-		    	primaryNav.selectButton(0);
+		    	primaryNav.selectButton(1);
 		    };
 
 		    function _scrollWindowToContentBlock(blockId) {
-		    	_scrollWindowTo($('.content:eq(' + blockId + ')').offset().top - _this.els.$appHeader.height());
+		    	if(blockId > 0) {
+		    		_scrollWindowTo($('.content:eq(' + (blockId-1) + ')').offset().top - _this.els.$appHeader.height());
+		    	} else {
+		    		_scrollWindowTo(0);
+		    	}
 		    };
 
 		    /**
@@ -109,13 +113,13 @@ define(
 		        	// Handling the user scrolling
 			        var scrollDirection;
 			        var scrollPosition = $window.scrollTop();
-			        var scrollOffset = _this.els.$appHeader.height() * 1.2;
+			        var scrollOffset = _this.els.$appHeader.height() * 3;
 
-			        if(scrollPosition < $('.content:eq(' + 0 + ')').offset().top - scrollOffset * 2) {
-			        	primaryNav.activateButton(-1);
+			        if(scrollPosition < $('.content:eq(' + 0 + ')').offset().top - scrollOffset) {
+			        	primaryNav.activateButton(0);
 			        } else {
-				        for (var i = 2; i >= 0; i--) {
-				        	if((scrollPosition >= $('.content:eq(' + i + ')').offset().top - scrollOffset) && primaryNav.getSelected() !== i) {
+				        for (var i = 3; i >= 1; i--) {
+				        	if((scrollPosition >= $('.content:eq(' + (i-1) + ')').offset().top - scrollOffset) && primaryNav.getSelected() !== i+1) {
 								primaryNav.activateButton(i);
 					        	break;
 					        }
