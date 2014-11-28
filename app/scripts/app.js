@@ -4,6 +4,7 @@ define(
 		'signals',
 		'fastclick',
 		'tweenmax',
+		'modules/primary-nav',
 		'modules/block-hero'
 	],
 
@@ -12,6 +13,7 @@ define(
 		signals,
 		fastclick,
 		TweenMax,
+		PrimaryNav,
 		HeroBlock
 	) {
 
@@ -36,11 +38,15 @@ define(
 			_this.signals.appResized = new signals.Signal();
 
 			var heroBlock;
+			var primaryNav;
 
 			function _init() {
+				primaryNav = new PrimaryNav(_this, $('#primaryNav'));
+				primaryNav.signals.selected.add(_scrollWindowToContentBlock);
+				
 				heroBlock = new HeroBlock(_this, $('#hero'));
 				heroBlock.signals.heroResized.add(_resizeBody);
-				heroBlock.signals.navbarClicked.add(_scrollWindowToContents);
+				heroBlock.signals.navbarClicked.add(_onNavbarSelected);
 
 				// Handle the app resizing
 				$window.on('resize', _resize);
@@ -57,6 +63,11 @@ define(
 				_this.els.$body.css({
 					top: heroBlock.getHeight() + _this.els.$appHeader.height()
 				});
+
+				// TO DO - refactor this later!
+				$('.content').css({
+					height: window.innerHeight - _this.els.$appHeader.height() - _this.els.$appFooter.height() + 'px'
+				});
 			};
 
 			/**
@@ -66,15 +77,19 @@ define(
 		    */
 		    function _scrollWindowTo(positionY) {
 		        window.sp = $window.scrollTop();
-		        TweenMax.to(window, 1.2, {sp: positionY, ease: Quart.easeInOut, onUpdate: function(){
+		        TweenMax.to(window, 0.6, {sp: positionY, ease: Quart.easeInOut, onUpdate: function(){
 		            window.scrollTo(0, window.sp);
 		        }});
 
 		    };
 
-		    function _scrollWindowToContents() {
-		    	_scrollWindowTo(_this.els.$body.offset().top - _this.els.$appHeader.height());
-		    }
+		    function _onNavbarSelected() {
+		    	primaryNav.selectButton(0);
+		    };
+
+		    function _scrollWindowToContentBlock(blockId) {
+		    	_scrollWindowTo($('.content:eq(' + blockId + ')').offset().top - _this.els.$appHeader.height());	
+		    };
 
 			// Self initialising
 			$(_init());

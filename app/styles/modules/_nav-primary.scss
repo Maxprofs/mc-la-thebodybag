@@ -27,5 +27,13 @@
 				border-color: $color-link-active;
 			}
 		}
+
+		&.is-active {
+			a {
+				color: $color-header-background;
+				background: $color-link-active;
+				border-color: $color-link-active;
+			}
+		}
 	}
 }

@@ -2,8 +2,6 @@
 	@extend .nav;
 
 	position: absolute;
-	// left: 50%;
-	// margin-left: -$video-nav-margin * 0.5 - $video-nav-button-size;
 	bottom: $video-nav-margin + $navbar-height;
 	right: $site-margin;
 	z-index: 100;

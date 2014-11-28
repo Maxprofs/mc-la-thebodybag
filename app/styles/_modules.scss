@@ -14,6 +14,7 @@
 	z-index: 2000;
 	position: fixed;
 	@include clearfix;
+	user-select: none;
 }
 .logo-header {
 	position: relative;
@@ -38,6 +39,7 @@
 	background-image: inline-image("noise.png");
 	background-color: $color-header-background;
 	z-index: 3000;
+	user-select: none;
 }
 
 .hero {
@@ -70,7 +72,7 @@
 }
 
 .content-intro {
-	position: relative;
+	// position: relative;
 	background: green;
 }
 
@@ -87,7 +89,6 @@
 }
 
 .content {
-	min-height: 300px;
-	padding-bottom: 120px;
+	min-height: 400px;
 	background: rgba(255, 255, 255, 0.4);
 }
