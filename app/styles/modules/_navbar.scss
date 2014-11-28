@@ -8,10 +8,34 @@
 	cursor: pointer;
 
 	.navbar_button {
-		width: 60px;
-		height: 100%;
+		width: 47px;
+		height: 20px;
 		left: 50%;
-		margin-left: -30px;
-		background: blue;
+		top: 15px;
+		margin-left: -24px;
+
+		.icon {
+			background: inline-image("svg/icon-arrow-down.svg");
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
+		.icon-active {
+			background: inline-image("svg/icon-arrow-down-active.svg");
+			background-size: cover;
+			background-repeat: no-repeat;
+
+			opacity: 0;
+			visibility: hidden;
+		}
+	}
+
+	&:hover {
+		.icon {
+			opacity: 0;
+		}
+		.icon-active {
+			opacity: 1;
+			visibility: visible;
+		}
 	}
 }
