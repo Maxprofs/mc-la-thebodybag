@@ -3,6 +3,7 @@ define(
 		'jquery',
 		'signals',
 		'fastclick',
+		'tweenmax',
 		'modules/block-hero'
 	],
 
@@ -10,6 +11,7 @@ define(
 		$,
 		signals,
 		fastclick,
+		TweenMax,
 		HeroBlock
 	) {
 
@@ -38,6 +40,7 @@ define(
 			function _init() {
 				heroBlock = new HeroBlock(_this, $('#hero'));
 				heroBlock.signals.heroResized.add(_resizeBody);
+				heroBlock.signals.navbarClicked.add(_scrollWindowToContents);
 
 				// Handle the app resizing
 				$window.on('resize', _resize);
@@ -55,6 +58,23 @@ define(
 					top: heroBlock.getHeight() + _this.els.$appHeader.height()
 				});
 			};
+
+			/**
+		     * [scrollWindowTo description]
+		     * @param  {[type]} positionY [description]
+		     * @return {[type]}           [description]
+		    */
+		    function _scrollWindowTo(positionY) {
+		        window.sp = $window.scrollTop();
+		        TweenMax.to(window, 1.2, {sp: positionY, ease: Quart.easeInOut, onUpdate: function(){
+		            window.scrollTo(0, window.sp);
+		        }});
+
+		    };
+
+		    function _scrollWindowToContents() {
+		    	_scrollWindowTo(_this.els.$body.offset().top - _this.els.$appHeader.height());
+		    }
 
 			// Self initialising
 			$(_init());

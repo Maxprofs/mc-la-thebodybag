@@ -20,14 +20,16 @@ define(
 			// Signals
 			_this.signals = {};
 			_this.signals.heroResized = new signals.Signal();
+			_this.signals.navbarClicked = new signals.Signal();
 
 			// View elements
 			_this.els = {};
 			_this.els._$parent = el;
 			_this.els.$mash = _this.els._$parent.find('.mash');
 			_this.els.$video = _this.els._$parent.find('.video-hero');
-			_this.els.$playButton = _this.els._$parent.find('.button-play');
-			_this.els.$muteButton = _this.els._$parent.find('.button-mute');
+			_this.els.$playButton = _this.els._$parent.find('.nav_button-play');
+			_this.els.$muteButton = _this.els._$parent.find('.nav_button-mute');
+			_this.els.$navbar = _this.els._$parent.find('.navbar');
 
 			var heroVideoEl = _this.els.$video[0];
 			var heroVideoVolume = 1;
@@ -85,6 +87,8 @@ define(
 				_this.els.$playButton.on('click', _onPlayButtonClick);
 				_this.els.$muteButton.on('click', _onMuteButtonClick);
 
+				_this.els.$navbar.on('click', _onNavbarClick);
+
 				heroVideoEl.addEventListener('ended', _onVideoFinished);
 
 				// heroVideoEl.pause();
@@ -121,6 +125,10 @@ define(
 				TweenMax.to(window, 0.5, {volume: heroVideoVolume, onUpdate: function(){
 					heroVideoEl.volume = window.volume;
 				}});
+			};
+
+			function _onNavbarClick(e) {
+				_this.signals.navbarClicked.dispatch();
 			};
 
 			_this.getHeight = function getHeight() {

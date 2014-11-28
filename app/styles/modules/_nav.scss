@@ -1,0 +1,32 @@
+.nav {	
+	display: inline-block;
+
+	.nav_buttons {
+		margin: 0;
+		padding: 0;
+		display: inline-block;
+		@include clearfix;
+	}
+	.nav_button {
+		display: inline;
+		float: left;
+
+		.icon {
+			opacity: 1;
+		}
+		.icon-active {
+			opacity: 1;
+			visibility: hidden;
+		}
+
+		&:hover {
+			.icon {
+				opacity: 0;
+			}
+			.icon-active {
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+	}
+}
