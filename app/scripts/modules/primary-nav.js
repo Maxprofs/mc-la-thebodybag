@@ -26,13 +26,16 @@ define(
 			_this.els._$parent = el;
 			_this.els.$buttons = _this.els._$parent.find('.nav_button');
 
+			var _selectedIndex;
+
 			function _init() {
 				_this.els.$buttons.on('click', _onSelect);
 			};
 
 			function _onSelect(e) {
 				var $selectedButton = $(e.currentTarget);
-				_this.signals.selected.dispatch($selectedButton.index());
+				_selectedIndex = $selectedButton.index();
+				_this.signals.selected.dispatch(_selectedIndex);
 
 				_this.els.$buttons.removeClass('is-active');
 				$selectedButton.addClass('is-active');
@@ -41,6 +44,18 @@ define(
 			_this.selectButton = function selectButton(id){
 				$(_this.els.$buttons[id]).click();
 			};
+
+			_this.activateButton = function activateButton(id) {
+				_this.els.$buttons.removeClass('is-active');
+				_selectedIndex = -1;
+				if(id > -1) {
+					$(_this.els.$buttons[id]).addClass('is-active');
+				}
+			}
+
+			_this.getSelected = function getSelected() {
+				return _selectedIndex;
+			}
 
 			_init();
 		}
