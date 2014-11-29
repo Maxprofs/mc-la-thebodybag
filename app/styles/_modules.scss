@@ -90,11 +90,13 @@
 	left: 0;
 	background-repeat: no-repeat;
 	background-size: cover;
+	background-position: 0 50%;
 }
 
 .content {
 	min-height: 400px;
 	background: rgba(255, 255, 255, 0.4);
+	overflow: hidden;
 
 	.content_body {
 		z-index: 1000;
@@ -115,4 +117,11 @@
 	.photo-background {
 		background-image: url("../images/background-03.jpg");
 	}
+}
+
+.soundcloud-container {
+	max-width: 50%;
+	width: 30%;
+	left: 100px;
+	top: 100px;
 }
