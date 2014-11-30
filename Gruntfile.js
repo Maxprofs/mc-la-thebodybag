@@ -35,7 +35,7 @@ module.exports = function (grunt) {
         tasks: ['wiredep']
       },
       js: {
-        files: ['<%= config.app %>/scripts/{,*/}*.js'],
+        files: ['<%= config.app %>/scripts/{,*/}{,*/}{,*/}*.js'],
         tasks: ['requirejs:dev'],
         options: {
           livereload: true

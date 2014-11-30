@@ -4,8 +4,8 @@ define(
 		'signals',
 		'fastclick',
 		'tweenmax',
-		'modules/primary-nav',
-		'modules/block-hero'
+		'modules/primaryNav',
+		'modules/contentBlocks/contentBlockGroup'
 	],
 
 	function(
@@ -14,7 +14,7 @@ define(
 		fastclick,
 		TweenMax,
 		PrimaryNav,
-		HeroBlock
+		ContentBlockGroup
 	) {
 
 		'use strict';
@@ -25,7 +25,7 @@ define(
 			fastclick.attach(document.body);
 
 			var _this = this;
-			var $window = $(window);
+			_this.$window = $(window);
 
 			// Global app elements
 			_this.els = {};
@@ -36,97 +36,65 @@ define(
 			// Signals
 			_this.signals = {};
 			_this.signals.appResized = new signals.Signal();
+			_this.signals.appScrolled = new signals.Signal();
 
-			var heroBlock;
-			var primaryNav;
-
-			var scrollingContent = false;
-
+/////////////
+//////////////// PRIVATE METHODS
+///
 			function _init() {
-				primaryNav = new PrimaryNav(_this, $('#primaryNav'));
-				primaryNav.signals.selected.add(_scrollWindowToContentBlock);
-				
-				heroBlock = new HeroBlock(_this, $('#hero'));
-				heroBlock.signals.heroResized.add(_resizeBody);
-				heroBlock.signals.navbarClicked.add(_onNavbarSelected);
+				_this.primaryNav = new PrimaryNav(_this, $('#primaryNav'));
+				_this.primaryNav.signals.selected.add(_onPrimaryNavSelected);
+
+				_this.contentBlockGroup = new ContentBlockGroup(_this, $('#contentBlockGroup'));
+				_this.contentBlockGroup.signals.heroNavbarSelected.add(_onHeroNavbarSelected);
+				_this.contentBlockGroup.signals.contentBlockActivated.add(_onContentBlockActivated);
 
 				// Handle app scrolling
-				$window.on("scroll", _onScroll);
+				_this.$window.on("scroll", _onScrolled);
 
 				// Handle the app resizing
-				$window.on('resize', _resize);
-				setTimeout(function() {_resize();}, 100);
+				_this.$window.on('resize', _onResized);
+				setTimeout(function() {_onResized();}, 100);
 			};
 
-			function _resize() {
+			/**
+		     * Handle the window resize event
+		    */
+			function _onResized() {
 				// Sending out a signal
 				_this.signals.appResized.dispatch();
 			};
 
-			function _resizeBody() {
-				// Resize the body according to the dimensions of the hero block
-				_this.els.$body.css({
-					top: heroBlock.getHeight() + _this.els.$appHeader.height()
-				});
-
-				// TO DO - refactor this later!
-				$('.content').css({
-					height: window.innerHeight - _this.els.$appHeader.height() - _this.els.$appFooter.height() + 'px'
-				});
-			};
-
 			/**
-		     * [scrollWindowTo description]
-		     * @param  {[type]} positionY [description]
-		     * @return {[type]}           [description]
-		    */
-		    function _scrollWindowTo(positionY) {
-		        scrollingContent = true;
-		        window.sp = $window.scrollTop();
-		        TweenMax.to(window, 0.6, {sp: positionY, ease: Quart.easeInOut, onUpdate: function(){
-		            window.scrollTo(0, window.sp);
-		        }, onComplete: function(){
-		        	window.setTimeout(function(){
-		        		scrollingContent = false;
-		        	}, 1000);
-		        }});
-
-		    };
-
-		    function _onNavbarSelected() {
-		    	primaryNav.selectButton(1);
-		    };
-
-		    function _scrollWindowToContentBlock(blockId) {
-		    	if(blockId > 0) {
-		    		_scrollWindowTo($('.content:eq(' + (blockId-1) + ')').offset().top - _this.els.$appHeader.height());
-		    	} else {
-		    		_scrollWindowTo(0);
-		    	}
-		    };
-
-		    /**
 		     * Handle the window scroll event
 		    */
-		    function _onScroll(e) {
-		        if(!scrollingContent) {
-		        	// Handling the user scrolling
-			        var scrollDirection;
-			        var scrollPosition = $window.scrollTop();
-			        var scrollOffset = _this.els.$appHeader.height() * 3;
-
-			        if(scrollPosition < $('.content:eq(' + 0 + ')').offset().top - scrollOffset) {
-			        	primaryNav.activateButton(0);
-			        } else {
-				        for (var i = 3; i >= 1; i--) {
-				        	if((scrollPosition >= $('.content:eq(' + (i-1) + ')').offset().top - scrollOffset) && primaryNav.getSelected() !== i+1) {
-								primaryNav.activateButton(i);
-					        	break;
-					        }
-				        }
-				    }
-		        }
+		    function _onScrolled(e) {
+		        _this.signals.appScrolled.dispatch();
 		    };
+
+		    /*
+		     * Handle hero navbar selection
+		     */
+		    function _onHeroNavbarSelected(contentBlockId) {
+		    	_this.primaryNav.setSelected(contentBlockId);
+		    	_this.contentBlockGroup.setActiveContentBlockId(contentBlockId);
+		    };
+
+		    /*
+		     * Handle primary nav selection
+		     */
+		    function _onPrimaryNavSelected(buttonId) {
+		    	_this.contentBlockGroup.setActiveContentBlockId(buttonId);
+		    };
+
+		    /*
+		     * Handle the content scrolling signal
+		     */
+		    function _onContentBlockActivated(contentBlockId) {
+		    	if(_this.primaryNav.getSelected() !== contentBlockId) {
+		    		_this.primaryNav.setSelected(contentBlockId);
+		    	}
+		    }
 
 			// Self initialising
 			$(_init());

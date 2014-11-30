@@ -1,0 +1,53 @@
+.contentgroup {
+	top: $header-height;
+	padding-bottom: $footer-height;
+}
+.content {
+	min-height: 400px;
+	background: rgba(255, 255, 255, 0.4);
+	overflow: hidden;
+
+	.content_body {
+		z-index: 1000;
+	}
+}
+.content_mash {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-image: inline-image("stripe.png");
+	z-index: 2;
+	background-color: rgba(0, 0, 255, 0.1);
+}
+
+.content_background {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 0 50%;
+}
+
+.content-hero {
+	width: 100%;
+	overflow: hidden;
+}
+.content-music {
+	.content_background {
+		background-image: url("../images/background-01.jpg");
+	}
+}
+
+.content-videos {
+	.content_background {
+		background-image: url("../images/background-02.jpg");
+	}
+}
+.content-photos {
+	.content_background {
+		background-image: url("../images/background-03.jpg");
+	}
+}

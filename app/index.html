@@ -32,35 +32,37 @@
       </header>
     </section>
 
-    <section class="hero table-row" id="hero">
-      <div class="mash"></div>
-      <!-- set the source programatically -->
-      <video class="video-hero" src="videos/mc-la-hero.mp4" autoplay="autoplay"></video>
-      
-      <div class="nav-video">
-        <ul class="nav_buttons">
-          <li class="nav_button nav_button-play">
-            <i class="icon-small"></i>
-            <i class="icon-small icon-active"></i>
-          </li>
-          <li class="nav_button nav_button-mute">
-            <i class="icon-small"></i>
-            <i class="icon-small icon-active"></i>
-          </li>
-        </ul>
-      </div>
-      <div class="navbar">
-        <div class="navbar_button">
-            <i class="icon"></i>
-            <i class="icon icon-active"></i>
+    <div class="contentgroup" id="contentBlockGroup">
+      <!-- BAZIS content block -->
+      <section class="content content-hero" id="heroContentBlock">
+        <div class="content_mash"></div>
+        <!-- set the source programatically -->
+        <video class="video-hero" src="videos/mc-la-hero.mp4"></video>
+        
+        <div class="nav-video">
+          <ul class="nav_buttons">
+            <li class="nav_button nav_button-play">
+              <i class="icon-small"></i>
+              <i class="icon-small icon-active"></i>
+            </li>
+            <li class="nav_button nav_button-mute">
+              <i class="icon-small"></i>
+              <i class="icon-small icon-active"></i>
+            </li>
+          </ul>
         </div>
-      </div>
-    </section>
+        <div class="navbar">
+          <div class="navbar_button">
+              <i class="icon"></i>
+              <i class="icon icon-active"></i>
+          </div>
+        </div>
+      </section>
 
-    <section class="body" id="body">      
-      <section class="content content-music" id="music">
-        <div class="mash"></div>
-        <div class="photo-background"></div>
+      <!-- MUSIC content block -->
+      <section class="content content-music" id="musicContentBlock">
+        <div class="content_mash"></div>
+        <div class="content_background"></div>
         <div class="content_body">
             <h1>Zenék</h1>
             <div class="soundcloud-container">
@@ -69,22 +71,24 @@
         </div>
       </section>
 
-      <section class="content content-videos" id="videos">
-        <div class="mash"></div>
-        <div class="photo-background"></div>
+      <!-- VIDEOS content block -->
+      <section class="content content-videos" id="videosContentBlock">
+        <div class="content_mash"></div>
+        <div class="content_background"></div>
         <div class="content_body">
           <h1>Videók</h1>
         </div>
       </section>
 
-      <section class="content content-photos" id="photos">
-        <div class="mash"></div>
-        <div class="photo-background"></div>
+      <!-- PHOTOS content block -->
+      <section class="content content-photos" id="photosContentBlock">
+        <div class="content_mash"></div>
+        <div class="content_background"></div>
         <div class="content_body">
           <h1>Képek</h1>
         </div>
       </section>
-    </section>
+    </div>
 
     <section id="appFooter" class="footer">
       <nav class="nav-social">
