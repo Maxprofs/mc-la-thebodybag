@@ -294,7 +294,7 @@ module.exports = function (grunt) {
           removeCombined: true,
           generateSourceMaps: true,
           findNestedDependencies: true,
-          preserveLicenseComments: true,
+          preserveLicenseComments: false,
           optimize: 'none'
         }
       },
@@ -339,9 +339,20 @@ module.exports = function (grunt) {
     //     }
     //   }
     // },
-    // concat: {
-    //   dist: {}
-    // },
+    concat: {
+      copyright: {
+        files: {
+          '<%= config.dist %>/scripts/application.js': [
+            '<%= config.app %>/scripts/copyright.js',
+            '<%= config.dist %>/scripts/application.js'
+          ],
+          '<%= config.dist %>/styles/application.css': [
+            '<%= config.app %>/scripts/copyright.js',
+            '.tmp/styles/application.css'
+          ]
+        }
+      }
+    },
 
     // Copies remaining files to places other tasks can use
     copy: {
@@ -434,6 +445,7 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concurrent:dist',
     'requirejs:dist',
+    'concat:copyright',
     'autoprefixer',
     'concat',
     'cssmin',
