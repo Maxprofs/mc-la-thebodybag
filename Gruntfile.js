@@ -121,6 +121,25 @@ module.exports = function (grunt) {
       server: '.tmp'
     },
 
+    // Deployment
+    secret: grunt.file.readJSON('secret.json'),
+    sftp: {
+      staging: {
+        options: {
+          host: '<%= secret.staging.host %>',
+          path: '<%= secret.staging.path %>',
+          username: '<%= secret.staging.username %>',
+          password: '<%= secret.staging.password %>',
+          srcBasePath: '<%= config.dist %>',
+          createDirectories: true,
+          showProgress: true
+        },
+        files: {
+          "./": "<%= config.dist %>/**"
+        }
+      }
+    },
+
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
@@ -447,8 +466,6 @@ module.exports = function (grunt) {
     'requirejs:dist',
     'concat:copyright',
     'autoprefixer',
-    'concat',
-    'cssmin',
     'copy:dist',
     'rev',
     'usemin',
@@ -459,5 +476,11 @@ module.exports = function (grunt) {
     'newer:jshint',
     'test',
     'build'
+  ]);
+
+  // Deploying through SFTP
+  grunt.registerTask('deploy:staging', [
+    'build',
+    'sftp:staging'
   ]);
 };
