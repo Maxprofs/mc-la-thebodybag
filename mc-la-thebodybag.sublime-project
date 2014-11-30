@@ -1,0 +1,31 @@
+{
+	"folders":
+	[
+		{
+			"folder_exclude_patterns":
+			[
+				".sass-cache",
+				".tmp",
+				"test",
+				"node_modules",
+				"dist/styles",
+				"dist/scripts",
+				"dist/images",
+				"dist/videos"
+			],
+			"follow_symlinks": true,
+			"path": "."
+		}
+	],
+	"settings":
+	{
+		"font_size": 18,
+		"rulers":
+		[
+			72
+		],
+		"tab_size": 4,
+		"translate_tabs_to_spaces": true,
+		"word_wrap": true
+	}
+}

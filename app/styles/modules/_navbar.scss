@@ -1,8 +1,20 @@
+@include keyframes(arrow) {
+    0% {
+        @include transform(translateY(0));
+    }
+    45% {
+        @include transform(translateY(6px));
+    }
+    100% {
+        @include transform(translateY(0));
+    }
+}
+
 .navbar {
 	position: absolute;
 	width: 100%;
 	height: $navbar-height;
-	background: rgba(0, 0, 0, 0.3);
+	// background: rgba(0, 0, 0, 0.3);
 	bottom: 0;
 	z-index: 1000;
 	cursor: pointer;
@@ -13,6 +25,7 @@
 		left: 50%;
 		top: 15px;
 		margin-left: -24px;
+		@include animation(arrow 3s infinite);
 
 		.icon {
 			background: inline-image("svg/icon-arrow-down.svg");
