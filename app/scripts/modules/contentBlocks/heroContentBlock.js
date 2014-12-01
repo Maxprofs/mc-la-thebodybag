@@ -69,16 +69,15 @@ define(
 				}, 1000);
 
 				_stopUpdatingProgressBar();
+				TweenMax.to(_this.heroVideoEl, 1, {opacity: 0.6, ease: Expo.easeOut});
 			};
 
 			function _onVideoMetadataLoaded() {
 				_this.heroVideoDuration = _this.heroVideoEl.duration;
-				
-				// TO DO - don't forget to get rid of this before deploying
-				// _this.heroVideoEl.currentTime = _this.heroVideoDuration - 5;
 			};
 
 			function _onVideoCanPlay() {
+				_this.heroVideoEl.removeEventListener("canplay", _onVideoCanPlay);
 				_this.els.$playButton.click();
 			};
 
