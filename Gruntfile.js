@@ -35,7 +35,7 @@ module.exports = function (grunt) {
         tasks: ['wiredep']
       },
       js: {
-        files: ['<%= config.app %>/scripts/{,*/}{,*/}{,*/}*.js'],
+        files: ['<%= config.app %>/scripts/{,*/}{,*/}{,*/}*.*'],
         tasks: ['requirejs:dev'],
         options: {
           livereload: true
@@ -386,7 +386,8 @@ module.exports = function (grunt) {
             'images/{,*/}*.webp',
             '{,*/}*.html',
             'styles/fonts/{,*/}*.*',
-            'videos/{,*/}*.*'
+            'videos/{,*/}*.*',
+            'resources/{,*/}*.*'
           ]
         }, {
           src: 'node_modules/apache-server-configs/dist/.htaccess',

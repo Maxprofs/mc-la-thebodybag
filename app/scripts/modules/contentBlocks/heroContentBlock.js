@@ -78,7 +78,7 @@ define(
 
 			function _onVideoCanPlay() {
 				_this.heroVideoEl.removeEventListener("canplay", _onVideoCanPlay);
-				_this.els.$playButton.click();
+				// _this.els.$playButton.click();
 			};
 
 			function _getBufferedPercent() {

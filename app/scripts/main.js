@@ -1,5 +1,6 @@
 require.config({
     paths: {
+        'text':         '../../bower_components/requirejs-text/text',
         'jquery':       '../../bower_components/jquery/dist/jquery',
         'signals':      '../../bower_components/js-signals/dist/signals',
         'tweenmax':     '../../bower_components/greensock/src/uncompressed/TweenMax',
@@ -9,10 +10,6 @@ require.config({
         jquery: {
             deps: [],
             exports: '$'
-        },
-        'signals': {
-            deps: [],
-            exports: 'jsSignals'
         },
         tweenmax: {
             deps: [],

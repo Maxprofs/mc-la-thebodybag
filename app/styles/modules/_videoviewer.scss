@@ -1,0 +1,38 @@
+.videoviewer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 200000;
+    user-select: none;
+    overflow: hidden;
+}
+
+.videowrapper {
+    width: 100%;
+    height: 0;
+
+    .video {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        padding-bottom: 56.2%;
+    }
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.videoviewer_nav {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}

@@ -3,14 +3,16 @@ define(
 		'jquery',
 		'signals',
 		'tweenmax',
-		'modules/contentBlocks/heroContentBlock'
+		'modules/contentBlocks/heroContentBlock',
+		'modules/contentBlocks/videosContentBlock'
 	],
 
 	function(
 		$,
 		signals,
 		TweenMax,
-		HeroContentBlock
+		HeroContentBlock,
+		VideosContentBlock
 	) {
 
 		'use strict';
@@ -30,7 +32,6 @@ define(
 			_this.signals.contentBlockActivated = new signals.Signal();
 
 			_this.$window = $(window);
-			_this.heroContentBlock;
 			_this.activeContentBlockId = 0;
 			_this.scrollingContent = false;
 
@@ -41,6 +42,8 @@ define(
 				// Content blocks
 				_this.heroContentBlock = new HeroContentBlock(_this.app, $('#heroContentBlock'));
 				_this.heroContentBlock.signals.navbarSelected.add(_onNavbarSelected);
+
+				_this.videosContentBlock = new VideosContentBlock(_this.app, $('#videosContentBlock'));
 
 				// Signal handlers
 				_this.app.signals.appScrolled.add(function() {
@@ -61,6 +64,7 @@ define(
 				});
 
 				_this.heroContentBlock.resize();
+				_this.videosContentBlock.resize();
 
 				// Scroll to the active content block when the app is resized
 				if(!_this.scrollingContent) {

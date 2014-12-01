@@ -44,3 +44,28 @@
 	left: 100px;
 	top: 100px;
 }
+
+.thumbnails {
+	position: absolute;
+	display: inline-block;
+	bottom: 20px;
+	left: 20px;
+	@include clearfix;
+	user-select: none;
+}
+
+.thumbnail {
+	float: left;
+	display: inline-block;
+	width: 240px;
+	height: 240px;
+	padding: 15px;
+	font-size: 50%;
+	overflow: hidden;
+	background: rgba(0, 0, 0, 0.5);
+	cursor: pointer;
+
+	&:not(:last-child) {
+		margin-right: 20px;
+	}
+}
