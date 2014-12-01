@@ -38,9 +38,12 @@ define(
 			_this.els.$playButton = _this.els._$parent.find('.nav_button-play');
 			_this.els.$muteButton = _this.els._$parent.find('.nav_button-mute');
 			_this.els.$navbar = _this.els._$parent.find('.navbar');
+			_this.els.$progressBarPlayed = _this.els._$parent.find('.progressbar-played');
+			_this.els.$progressBarBuffered = _this.els._$parent.find('.progressbar-buffered');
 
 			_this.heroVideoEl = _this.els.$video[0];
 			_this.heroVideoVolume = 1;
+			_this.heroVideoDuration = 0;
 			window.volume = _this.heroVideoVolume;
 
 /////////////
@@ -53,27 +56,75 @@ define(
 
 				_this.els.$navbar.on('click', _onNavbarClick);
 
+				_this.heroVideoEl.addEventListener("canplay", _onVideoCanPlay);
+				_this.heroVideoEl.addEventListener("loadedmetadata", _onVideoMetadataLoaded);
 				_this.heroVideoEl.addEventListener('ended', _onVideoFinished);
-
-				// TO DO - sort this out
-				// _this.heroVideoEl.pause();
-				// if(_this.heroVideoEl.paused) {
-				// 	_this.els.$playButton.click();
-				// }
 			};
 
 			function _onVideoFinished(e) {
 				_this.els.$playButton.removeClass('is-active');
+
+				setTimeout(function(){
+					_this.els.$navbar.click();
+				}, 1000);
+
+				_stopUpdatingProgressBar();
+			};
+
+			function _onVideoMetadataLoaded() {
+				_this.heroVideoDuration = _this.heroVideoEl.duration;
+				
+				// TO DO - don't forget to get rid of this before deploying
+				// _this.heroVideoEl.currentTime = _this.heroVideoDuration - 5;
+			};
+
+			function _onVideoCanPlay() {
+				_this.els.$playButton.click();
+			};
+
+			function _getBufferedPercent() {
+				if(_this.heroVideoEl.readyState) {
+					var buffered = _this.heroVideoEl.buffered.end(0);
+				    var bufferedPercent = 100 * buffered / _this.heroVideoDuration;
+
+				    return bufferedPercent;
+				} else {
+					return 100;
+				}
+			};
+
+			function _startUpdatingProgressBar() {
+				_stopUpdatingProgressBar();				
+				_this.updateProgressInterval = setInterval(_updateProgressBar, 500);
+			};
+
+			function _stopUpdatingProgressBar() {
+				clearInterval(_this.updateProgressInterval);
+			};
+
+			function _updateProgressBar() {
+				var playedPercent = 100 * _this.heroVideoEl.currentTime / _this.heroVideoDuration;
+				var bufferedPercent = _getBufferedPercent();
+
+			    _this.els.$progressBarBuffered.width(bufferedPercent + '%');
+			    _this.els.$progressBarPlayed.width(playedPercent + '%');
+
+			    //If finished buffering buffering quit calling it
+			    if (_this.heroVideoEl.currentTime >= _this.heroVideoDuration) {
+					_stopUpdatingProgressBar();
+				}
 			};
 
 			function _onPlayButtonClick(e) {
 				if(_this.heroVideoEl.paused) {
 					$(this).addClass('is-active');
 					_this.heroVideoEl.play();
+					_startUpdatingProgressBar();
 					TweenMax.to(_this.heroVideoEl, 1, {opacity: 1, ease: Expo.easeOut});
 				} else {
 					$(this).removeClass('is-active');
 					_this.heroVideoEl.pause();
+					_stopUpdatingProgressBar();
 					TweenMax.to(_this.heroVideoEl, 1, {opacity: 0.6, ease: Expo.easeOut});
 				}
 			};

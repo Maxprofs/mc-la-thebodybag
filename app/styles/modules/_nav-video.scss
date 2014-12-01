@@ -2,9 +2,9 @@
 	@extend .nav;
 
 	position: absolute;
-	bottom: $video-nav-margin + $navbar-height;
+	bottom: $video-nav-margin;
 	right: $site-margin;
-	z-index: 100;
+	z-index: 4;
 
 	.nav_buttons {
 		display: block;

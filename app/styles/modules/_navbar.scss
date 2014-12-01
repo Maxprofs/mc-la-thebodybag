@@ -14,8 +14,8 @@
 	position: absolute;
 	width: 100%;
 	height: $navbar-height;
-	bottom: 0;
-	z-index: 1000;
+	bottom: 5px;
+	z-index: 3;
 	cursor: pointer;
 
 	.navbar_button {
