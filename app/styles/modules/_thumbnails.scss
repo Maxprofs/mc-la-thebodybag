@@ -1,0 +1,91 @@
+.thumbnails {
+    position: absolute;
+    display: inline-block;
+    bottom: 20px;
+    left: 20px;
+    @include clearfix;
+    user-select: none;
+}
+
+.thumbnail {
+    float: left;
+    display: inline-block;
+    width: 320px;
+    height: 240px;
+    font-size: 50%;
+    overflow: hidden;
+    background: #000;
+    cursor: pointer;
+
+    &:not(:last-child) {
+        margin-right: 2px;
+    }
+
+    .thumbnail_bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+        background-size: cover;
+
+        @include transform(scale(1) rotateX(0deg));
+
+        @include transition-property(opacity transform);
+        @include transition-duration(2.1s);
+        @include transition-timing-function($ease-out-quart);
+    }
+
+    .thumbnail_title {
+        position: absolute;
+        width: 100%;
+        min-height: 68px;
+        padding: 15px 15px 0 15px;
+        margin: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.8);
+        line-height: 18px;
+        color: #000;
+
+        @include transition-property(color background-color height);
+        @include transition-duration(0.2s);
+        @include transition-timing-function($ease-out-back);
+    }
+
+    .thumbnail_play {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        left: 50%;
+        margin-left: -16px;
+        bottom: 24px;
+        opacity: 0;
+        border: 1px solid #FFF;
+
+        @include transform(scale(0.4));
+        @include transition-property(opacity transform);
+        @include transition-duration(0.21s);
+        @include transition-timing-function($ease-out-back);
+        
+        .icon {
+            background: inline-image("svg/icon-media-play.svg");
+        }
+    }
+
+    &:hover {
+        .thumbnail_bg {
+            opacity: 0.8;
+            @include transform(scale(1.2) rotateZ(1.5deg));
+        }
+
+        .thumbnail_title {
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            min-height: 120px;
+        }
+
+        .thumbnail_play {
+            opacity: 1;
+            @include transform(scale(1));
+        }
+    }
+}

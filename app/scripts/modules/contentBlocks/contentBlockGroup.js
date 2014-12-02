@@ -86,6 +86,7 @@ define(
 			        	if(scrollPosition >=  (_getContentBlockPosY(i) - scrollOffset)) {
 							_this.activeContentBlockId = i;
 							_this.signals.contentBlockActivated.dispatch(i);
+							_this.setHeroVideoState(i);
 				        	break;
 				        }
 			        }
@@ -130,6 +131,8 @@ define(
 			_this.setActiveContentBlockId = function setActiveContentBlockId(id) {
 				_this.activeContentBlockId = id;
 				_scrollTo(_getContentBlockPosY(_this.activeContentBlockId));
+
+				_this.setHeroVideoState(id);
 			};
 
 			/*
@@ -137,6 +140,18 @@ define(
 			 */
 			_this.getActiveContentBlockId = function getActiveContentBlockId() {
 				return _this.activeContentBlockId;
+			};
+
+			/**
+			 * Stop the hero video when navigating away from it,
+			 * and resume when going back to it - if necessary
+			 */
+			_this.setHeroVideoState = function setHeroVideoState(id) {
+				if(id === 0) {
+					_this.heroContentBlock.resume();
+				} else {
+					_this.heroContentBlock.stop();
+				}
 			};
 
 			$(_init());

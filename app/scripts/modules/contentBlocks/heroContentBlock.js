@@ -1,4 +1,4 @@
-define(
+	define(
 	[
 		'jquery',
 		'signals',
@@ -45,6 +45,9 @@ define(
 			_this.heroVideoVolume = 1;
 			_this.heroVideoDuration = 0;
 			window.volume = _this.heroVideoVolume;
+
+			_this.isPlaying = false;
+			_this.wasPlaying = false;
 
 /////////////
 //////////////// PRIVATE METHODS
@@ -118,11 +121,13 @@ define(
 				if(_this.heroVideoEl.paused) {
 					$(this).addClass('is-active');
 					_this.heroVideoEl.play();
+					_this.isPlaying = true;
 					_startUpdatingProgressBar();
 					TweenMax.to(_this.heroVideoEl, 1, {opacity: 1, ease: Expo.easeOut});
 				} else {
 					$(this).removeClass('is-active');
 					_this.heroVideoEl.pause();
+					_this.isPlaying = false;
 					_stopUpdatingProgressBar();
 					TweenMax.to(_this.heroVideoEl, 1, {opacity: 0.6, ease: Expo.easeOut});
 				}
@@ -133,8 +138,10 @@ define(
 				
 				if(_this.heroVideoVolume < 1) {
 					$(this).addClass('is-active');
+					_this.hasSound = true;
 				} else {
 					$(this).removeClass('is-active');
+					_this.hasSound = false;
 				}
 
 				TweenMax.to(window, 0.5, {volume: _this.heroVideoVolume, onUpdate: function(){
@@ -194,6 +201,22 @@ define(
 			_this.getHeight = function getHeight() {
 				return _this.els._$parent.height();
 			};
+
+			_this.resume = function resume() {
+				if(!_this.isPlaying && _this.wasPlaying) {
+					_this.els.$playButton.click();
+				} else {
+					_this.wasPlaying = false;
+				}
+			};
+
+			_this.stop = function stop() {
+				if(_this.isPlaying) {
+					_this.els.$playButton.click();
+					_this.wasPlaying = true;
+				}
+			};
+
 
 			$(_init());
 		}

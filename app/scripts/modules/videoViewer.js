@@ -98,7 +98,9 @@ define(
                 });
 
                 _this.els.$wrapper.css({
+                    width: (window.innerWidth - 80) + 'px',
                     height: videoHeight + 'px',
+                    left: '40px',
                     top: Math.floor(winHeight * 0.5 - videoHeight * 0.5) + 'px'
                 });
             };

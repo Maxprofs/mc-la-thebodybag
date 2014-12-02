@@ -35,11 +35,16 @@ define(
 //////////////// PRIVATE METHODS
 ///
             function _init() {
-               var $thumbnail = $(_this.htmlContent);
-               $thumbnail.find('.thumbnail_title').html(_this.data.title);
-               _this.els._$parent.append($thumbnail);
+                var $thumbnail = $(_this.htmlContent);
 
-               $thumbnail.on('click', _onThumbnailSelect);
+                $thumbnail.find('.thumbnail_title').html(_this.data.title);
+                $thumbnail.find('.thumbnail_bg').css({
+                    'background-image': 'url(' + _this.data.thumbnail + ')'
+                });
+               
+                _this.els._$parent.append($thumbnail);
+
+                $thumbnail.on('click', _onThumbnailSelect);
             };
 
             function _onThumbnailSelect(e) {
