@@ -1,0 +1,27 @@
+.nav-videoviewer {
+    @extend .nav;
+    position: absolute;
+    right: $site-margin;
+    top: 14px;
+
+    .nav_buttons {
+        .nav_button {
+            width: $videonav-height;
+            height: $videonav-height;
+            border: 1px solid #FFF;
+
+            &.nav_button-close {
+                .icon {
+                    background: inline-image("svg/icon-close.svg");
+                }
+                .icon-active {
+                    background: inline-image("svg/icon-close-active.svg");
+                }
+            }
+
+            &:hover {
+                border-color: $color-link-active;
+            }
+        }
+    }
+}

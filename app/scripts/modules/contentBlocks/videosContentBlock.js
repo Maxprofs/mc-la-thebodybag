@@ -75,11 +75,11 @@ define(
 				}
 			};
 
-			function _onThumbnailSelected(videoId) {
+			function _onThumbnailSelected(data) {
 				if(typeof _this.videoViewer === 'undefined') {
 					_this.videoViewer = new VideoViewer(_this.app, $('#videosContentBlock'));
 					_this.videoViewer.signals.deactivated.add(_onVideoViewerDeactivated);
-					_this.videoViewer.activate(videoId);
+					_this.videoViewer.activate(data);
 					_this.resize();
 				}
 			};

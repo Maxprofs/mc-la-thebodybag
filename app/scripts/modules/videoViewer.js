@@ -28,16 +28,12 @@ define(
             _this.els.$body = $('body');
             _this.els._$parent = el;
 
-            console.log(_this.els._$parent);
-
             _this.htmlContent = content;
 
 /////////////
 //////////////// PRIVATE METHODS
 ///
             function _init() {
-                console.log('Hello video viewer!');
-
                 $.getScript('//youtube.com/iframe_api', function() {                    
                     var tag = document.createElement('script');
                     tag.src = '//youtube.com/iframe_api';
@@ -50,20 +46,18 @@ define(
                 };
             };
 
-            function _setUrl(url) {
-                console.log('url: ', url);
-            };
-
             function _onDeactivateComplete() {
                 _this.els.$viewer.remove();
                 _this.els.$body.css({'overflow': 'auto'});
-                _this.els.$viewer.on('click', undefined);
+                _this.els.$closeButton.on('click', undefined);
 
                 _this.signals.deactivated.dispatch();
             };
 
             function _onPlayerReady() {
                 console.log('_onPlayerReady');
+                TweenMax.set(_this.els.$wrapper, {visibility: 'visible'});
+                TweenMax.to(_this.els.$wrapper, 0.6, {opacity: 1, ease: Strong.easeOut, delay: 1});
             };
 
             function _onPlayerStateChange() {
@@ -97,7 +91,11 @@ define(
                 var headerHeight = _this.app.els.$appHeader.height();
                 var footerHeight = _this.app.els.$appFooter.height();
                 var winHeight = window.innerHeight;
-                var videoHeight = winHeight * 0.75;
+                var videoHeight = winHeight * 0.6;
+
+                _this.els.$viewerWrapper.css({
+                    width: window.innerWidth + 'px'
+                });
 
                 _this.els.$wrapper.css({
                     height: videoHeight + 'px',
@@ -105,25 +103,33 @@ define(
                 });
             };
 
-            _this.activate = function activate(videoId) {
+            _this.activate = function activate(videoData) {
                 _this.els.$viewer = $(_this.htmlContent);
                 _this.els.$body.append(_this.els.$viewer);
                 _this.els.$body.css({'overflow': 'hidden'});
 
                 _this.els.$viewer = _this.els.$body.find('.videoviewer');
+                _this.els.$viewerWrapper = _this.els.$body.find('.videoviewer_wrapper');
                 _this.els.$wrapper = _this.els.$viewer.find('.videowrapper');
+                _this.els.$wrapper.css({
+                    opacity: 0,
+                    visibility: 'hidden'
+                });
                 _this.els.$container = _this.els.$wrapper.find('.videoembed');
 
-                console.log(_this.els.$wrapper, _this.els.$container);
+                _this.els.$closeButton = _this.els.$viewer.find('.nav_button-close');
+                _this.els.$title = _this.els.$viewer.find('.videoviewer_title');
+
+                _this.els.$title.html(videoData.title);
 
                 TweenMax.set(_this.els.$viewer, {width: 0});
                 TweenMax.to(_this.els.$viewer, 1.5, {width: '100%', ease: Expo.easeInOut, onComplete: function(){
-                        _loadVideo(_this.videoId);
+                        _loadVideo(videoData.videoId);
                 }});
 
-                _this.els.$viewer.on('click', _this.deactivate);
+                _this.els.$closeButton.on('click', _this.deactivate);
 
-                _this.videoId = videoId;
+                _this.videoData = videoData;
             };
 
             _this.deactivate = function deactivate() {

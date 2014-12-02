@@ -43,7 +43,7 @@ define(
             };
 
             function _onThumbnailSelect(e) {
-                _this.signals.selected.dispatch(_this.data.videoId);
+                _this.signals.selected.dispatch(_this.data);
             };
 
 /////////////

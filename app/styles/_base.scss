@@ -16,6 +16,7 @@ body {
 * {
     @include box-sizing(border-box);
     position: relative;
+    font-weight: 200;
 }
 
 h1 {

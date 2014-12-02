@@ -5,11 +5,19 @@
 .content {
 	min-height: 400px;
 	overflow: hidden;
-
-	.content_body {
-		z-index: 1000;
-	}
 }
+.content_body {
+	z-index: 1000;
+}
+
+.content_title {
+	background: rgba(0, 0, 0, 0.5);
+	padding: 10px 12px 8px 12px;
+	margin-bottom: 2px;
+	font-size: 130%;
+	text-transform: uppercase;
+}
+
 .content_mash {
 	position: absolute;
 	width: 100%;
