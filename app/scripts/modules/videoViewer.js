@@ -103,6 +103,10 @@ define(
                     left: '40px',
                     top: Math.floor(winHeight * 0.5 - videoHeight * 0.5) + 'px'
                 });
+
+                _this.els.$title.css({
+                    top: (28 - _this.els.$title.height() * 0.5) + 'px'
+                })
             };
 
             _this.activate = function activate(videoData) {
