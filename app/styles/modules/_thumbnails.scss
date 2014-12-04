@@ -89,3 +89,13 @@
         }
     }
 }
+
+.thumbnails-photos {
+    .thumbnail {
+        width: 642px;
+
+        .thumbnail_bg {
+            background: inline-image("photo-thumbnail.jpg");
+        }
+    }
+}

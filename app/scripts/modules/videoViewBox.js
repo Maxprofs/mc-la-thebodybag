@@ -115,7 +115,7 @@ define(
                 _this.els.$body.css({'overflow': 'hidden'});
 
                 _this.els.$viewbox = _this.els.$body.find('.viewbox-video');
-                _this.els.$viewboxWrapper = _this.els.$body.find('.viewbox_wrapper');
+                _this.els.$viewboxWrapper = _this.els.$viewbox.find('.viewbox_wrapper');
                 _this.els.$wrapper = _this.els.$viewbox.find('.viewbox_box');
                 _this.els.$wrapper.css({
                     opacity: 0,

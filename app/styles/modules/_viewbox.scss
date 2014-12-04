@@ -8,4 +8,12 @@
     z-index: 200000;
     user-select: none;
     overflow: hidden;
+
+    .viewbox_wrapper {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        user-select: none;
+        position: absolute;
+    }
 }

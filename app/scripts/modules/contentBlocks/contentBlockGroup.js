@@ -4,7 +4,8 @@ define(
 		'signals',
 		'tweenmax',
 		'modules/contentBlocks/heroContentBlock',
-		'modules/contentBlocks/videosContentBlock'
+		'modules/contentBlocks/videosContentBlock',
+		'modules/contentBlocks/photosContentBlock'
 	],
 
 	function(
@@ -12,7 +13,8 @@ define(
 		signals,
 		TweenMax,
 		HeroContentBlock,
-		VideosContentBlock
+		VideosContentBlock,
+		PhotosContentBlock
 	) {
 
 		'use strict';
@@ -45,6 +47,8 @@ define(
 
 				_this.videosContentBlock = new VideosContentBlock(_this.app, $('#videosContentBlock'));
 
+				_this.photosContentBlock = new PhotosContentBlock(_this.app, $('#photosContentBlock'));
+
 				// Signal handlers
 				_this.app.signals.appScrolled.add(function() {
 					_onScrolled();
@@ -65,6 +69,7 @@ define(
 
 				_this.heroContentBlock.resize();
 				_this.videosContentBlock.resize();
+				_this.photosContentBlock.resize();
 
 				// Scroll to the active content block when the app is resized
 				if(!_this.scrollingContent) {
