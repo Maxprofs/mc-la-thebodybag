@@ -11,7 +11,7 @@
 	width: 100%;
 	height: $header-height;
 	color: $color-font-light;
-	background-image: inline-image("noise.png");
+	background-image: inline-image("inline/noise.png");
 	background-color: $color-header-background;
 	z-index: 2000;
 	position: fixed;
@@ -26,7 +26,7 @@
 	width: 96px;
 	height: 48px;
 	vertical-align: middle;
- 	background-image: inline-image("svg/mc-la-logo.svg");
+ 	background-image: inline-image("inline/svg/mc-la-logo.svg");
  	background-repeat: no-repeat;
  	@include clearfix;
 }
@@ -38,7 +38,7 @@
 	bottom: 0;
 	height: $footer-height;
 	line-height: $footer-height;
-	background-image: inline-image("noise.png");
+	background-image: inline-image("inline/noise.png");
 	background-color: $color-header-background;
 	z-index: 3000;
 	user-select: none;

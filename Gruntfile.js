@@ -118,7 +118,14 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      server: '.tmp'
+      server: '.tmp',
+      videos: {
+        files: [{
+          src: [
+            '<%= config.dist %>/videos/*'
+          ]
+        }]
+      }
     },
 
     // Deployment
@@ -137,6 +144,13 @@ module.exports = function (grunt) {
         files: {
           "./": "<%= config.dist %>/**"
         }
+      }
+    },
+
+    open : {
+      staging : {
+        path: '<%= secret.staging.publicUrl %>',
+        app: 'Google Chrome'
       }
     },
 
@@ -251,7 +265,8 @@ module.exports = function (grunt) {
         ]
       },
       html: ['<%= config.dist %>/{,*/}*.html'],
-      css: ['<%= config.dist %>/styles/{,*/}*.css']
+      css: ['<%= config.dist %>/styles/{,*/}*.css'],
+      json: ['<%= config.dist %>/resources/{,*/}*.json']
     },
 
     // The following *-min tasks produce minified files in the dist folder
@@ -260,8 +275,11 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= config.app %>/images',
-          src: '{,*/}*.{gif,jpeg,jpg,png}',
-          dest: '<%= config.dist %>/images'
+          src: [
+            '{,*/}*.{gif,jpeg,jpg,png}',
+            '!inline/*'
+          ],
+          dest: '<%= config.dist %>/images',
         }]
       }
     },
@@ -387,7 +405,8 @@ module.exports = function (grunt) {
             '{,*/}*.html',
             'styles/fonts/{,*/}*.*',
             'videos/{,*/}*.*',
-            'resources/{,*/}*.*'
+            'resources/{,*/}*.*',
+            '!images/svg'
           ]
         }, {
           src: 'node_modules/apache-server-configs/dist/.htaccess',
@@ -482,6 +501,8 @@ module.exports = function (grunt) {
   // Deploying through SFTP
   grunt.registerTask('deploy:staging', [
     'build',
-    'sftp:staging'
+    'clean:videos',
+    'sftp:staging',
+    'open:staging'
   ]);
 };

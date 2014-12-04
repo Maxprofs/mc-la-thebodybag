@@ -46,7 +46,7 @@ define(
 			};
 
 			function _loadPhotoResources() {
-				$.getJSON("/resources/photos.json")
+				$.getJSON("resources/photos.json")
 					.done(function(data) {
 						if(data.photos.length) {
 							console.log('_loadPhotoResources: ', data.photos);

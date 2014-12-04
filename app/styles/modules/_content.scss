@@ -25,7 +25,7 @@
 	height: 100%;
 	z-index: 2;
 	background-color: rgba(0, 0, 255, 0.1);
-	@include retina-image("../images/stripe", 3px 3px);
+	@include retina-image("../images/inline/stripe", 3px 3px);
 }
 
 .content_background {

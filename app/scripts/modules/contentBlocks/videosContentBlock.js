@@ -49,7 +49,7 @@ define(
 			};
 
 			function _loadVideoResources() {
-				$.getJSON("/resources/videos.json")
+				$.getJSON("resources/videos.json")
 					.done(function(data) {
 						if(data.videos.length) {
 							_addThumbnails(data.videos);

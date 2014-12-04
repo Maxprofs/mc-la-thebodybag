@@ -27,7 +27,7 @@
 		@include animation(arrow 3s infinite);
 
 		.icon {
-			background: inline-image("svg/icon-arrow-down.svg");
+			background: inline-image("inline/svg/icon-arrow-down.svg");
 			background-size: cover;
 			background-repeat: no-repeat;
 
@@ -35,7 +35,7 @@
             @extend .animation-link;
 		}
 		.icon-active {
-			background: inline-image("svg/icon-arrow-down-active.svg");
+			background: inline-image("inline/svg/icon-arrow-down-active.svg");
 			background-size: cover;
 			background-repeat: no-repeat;
 
