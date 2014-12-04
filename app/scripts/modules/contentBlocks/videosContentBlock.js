@@ -5,7 +5,7 @@ define(
 		'tweenmax',
 		'modules/contentBlocks/contentBlock',
 		'modules/videoThumbnail',
-		'modules/videoViewer'
+		'modules/videoViewBox'
 	],
 
 	function(
@@ -14,7 +14,7 @@ define(
 		TweenMax,
 		ContentBlock,
 		VideoThumbnail,
-		VideoViewer
+		VideoViewBox
 	) {
 
 		'use strict';
@@ -76,24 +76,24 @@ define(
 			};
 
 			function _onThumbnailSelected(data) {
-				if(typeof _this.videoViewer === 'undefined') {
-					_this.videoViewer = new VideoViewer(_this.app, $('#videosContentBlock'));
-					_this.videoViewer.signals.deactivated.add(_onVideoViewerDeactivated);
-					_this.videoViewer.activate(data);
+				if(typeof _this.videoViewBox === 'undefined') {
+					_this.videoViewBox = new VideoViewBox(_this.app, $('#videosContentBlock'));
+					_this.videoViewBox.signals.deactivated.add(_onVideoViewBoxDeactivated);
+					_this.videoViewBox.activate(data);
 					_this.resize();
 				}
 			};
 
-			function _onVideoViewerDeactivated() {
-				_this.videoViewer = undefined;
+			function _onVideoViewBoxDeactivated() {
+				_this.videoViewBox = undefined;
 			};
 
 /////////////
 //////////////// PUBLIC METHODS
 ///
 			_this.resize = function resize() {
-				if(typeof _this.videoViewer !== 'undefined') {
-					_this.videoViewer.resize();
+				if(typeof _this.videoViewBox !== 'undefined') {
+					_this.videoViewBox.resize();
 				}
 			};
 

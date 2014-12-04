@@ -1,0 +1,42 @@
+.viewbox-video {
+    @extend .viewbox;
+
+    .viewbox_title {
+        position: absolute;
+        display: inline-block;
+        left: 0;
+        clear: both;
+        width: 100%;
+        text-align: center;
+        font-weight: 200;
+        font-size: 80%;
+        text-transform: uppercase;
+        line-height: 21px;
+        vertical-align: middle;
+    }
+
+    .viewbox_wrapper {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        user-select: none;
+        position: absolute;
+        margin-top: 30px;
+
+        .video {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            padding-bottom: 56.2%;
+        }
+
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

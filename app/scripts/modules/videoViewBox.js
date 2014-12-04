@@ -3,7 +3,7 @@ define(
         'jquery',
         'signals',
         'tweenmax',
-        'text!templates/video-viewer.html'
+        'text!templates/video-viewbox.html'
     ],
 
     function(
@@ -15,7 +15,7 @@ define(
 
         'use strict';
 
-        function VideoViewer(app, el) {
+        function VideoViewBox(app, el) {
             var _this = this;
             _this.app = app;
             
@@ -47,7 +47,7 @@ define(
             };
 
             function _onDeactivateComplete() {
-                _this.els.$viewer.remove();
+                _this.els.$viewbox.remove();
                 _this.els.$body.css({'overflow': 'auto'});
                 _this.els.$closeButton.on('click', undefined);
 
@@ -93,7 +93,7 @@ define(
                 var winHeight = window.innerHeight;
                 var videoHeight = winHeight * 0.6;
 
-                _this.els.$viewerWrapper.css({
+                _this.els.$viewboxWrapper.css({
                     width: window.innerWidth + 'px'
                 });
 
@@ -110,26 +110,26 @@ define(
             };
 
             _this.activate = function activate(videoData) {
-                _this.els.$viewer = $(_this.htmlContent);
-                _this.els.$body.append(_this.els.$viewer);
+                _this.els.$viewbox = $(_this.htmlContent);
+                _this.els.$body.append(_this.els.$viewbox);
                 _this.els.$body.css({'overflow': 'hidden'});
 
-                _this.els.$viewer = _this.els.$body.find('.videoviewer');
-                _this.els.$viewerWrapper = _this.els.$body.find('.videoviewer_wrapper');
-                _this.els.$wrapper = _this.els.$viewer.find('.videowrapper');
+                _this.els.$viewbox = _this.els.$body.find('.viewbox-video');
+                _this.els.$viewboxWrapper = _this.els.$body.find('.viewbox_wrapper');
+                _this.els.$wrapper = _this.els.$viewbox.find('.viewbox_box');
                 _this.els.$wrapper.css({
                     opacity: 0,
                     visibility: 'hidden'
                 });
-                _this.els.$container = _this.els.$wrapper.find('.videoembed');
+                _this.els.$container = _this.els.$wrapper.find('.viewbox_embed');
 
-                _this.els.$closeButton = _this.els.$viewer.find('.nav_button-close');
-                _this.els.$title = _this.els.$viewer.find('.videoviewer_title');
+                _this.els.$closeButton = _this.els.$viewbox.find('.nav_button-close');
+                _this.els.$title = _this.els.$viewbox.find('.viewbox_title');
 
                 _this.els.$title.html(videoData.title);
 
-                TweenMax.set(_this.els.$viewer, {width: 0});
-                TweenMax.to(_this.els.$viewer, 1.5, {width: '100%', ease: Expo.easeInOut, onComplete: function(){
+                TweenMax.set(_this.els.$viewbox, {width: 0});
+                TweenMax.to(_this.els.$viewbox, 1.5, {width: '100%', ease: Expo.easeInOut, onComplete: function(){
                         _loadVideo(videoData.videoId);
                 }});
 
@@ -139,7 +139,7 @@ define(
             };
 
             _this.deactivate = function deactivate() {
-                TweenMax.to(_this.els.$viewer, 1.5, {width: 0, ease: Expo.easeInOut, onComplete: function(){
+                TweenMax.to(_this.els.$viewbox, 1.5, {width: 0, ease: Expo.easeInOut, onComplete: function(){
                     _onDeactivateComplete()
                 }});
             };
@@ -147,6 +147,6 @@ define(
             $(_init());
         }
 
-        return VideoViewer;
+        return VideoViewBox;
     }
 );
