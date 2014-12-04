@@ -67,6 +67,9 @@
 			function _onVideoFinished(e) {
 				_this.els.$playButton.removeClass('is-active');
 
+				_this.isPlaying = false;
+				_this.wasPlaying = false;
+
 				setTimeout(function(){
 					_this.els.$navbar.click();
 				}, 1000);
