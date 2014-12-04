@@ -30,6 +30,9 @@
 			background: inline-image("svg/icon-arrow-down.svg");
 			background-size: cover;
 			background-repeat: no-repeat;
+
+            @include transition-property(opacity);
+            @extend .animation-link;
 		}
 		.icon-active {
 			background: inline-image("svg/icon-arrow-down-active.svg");
@@ -37,7 +40,9 @@
 			background-repeat: no-repeat;
 
 			opacity: 0;
-			visibility: hidden;
+			
+            @include transition-property(opacity);
+            @extend .animation-link;
 		}
 	}
 
@@ -47,7 +52,6 @@
 		}
 		.icon-active {
 			opacity: 1;
-			visibility: visible;
 		}
 	}
 }

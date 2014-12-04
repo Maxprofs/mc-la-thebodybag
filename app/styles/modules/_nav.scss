@@ -12,12 +12,20 @@
 		float: left;
 		cursor: pointer;
 
+		@include transition-property(background-color border-color);
+		@extend .animation-link;
+
 		.icon {
 			opacity: 1;
+			
+			@include transition-property(opacity);
+			@extend .animation-link;
 		}
 		.icon-active {
-			opacity: 1;
-			visibility: hidden;
+			opacity: 0;
+
+			@include transition-property(opacity);
+			@extend .animation-link;
 		}
 
 		&:hover {
@@ -26,7 +34,6 @@
 			}
 			.icon-active {
 				opacity: 1;
-				visibility: visible;
 			}
 		}
 	}

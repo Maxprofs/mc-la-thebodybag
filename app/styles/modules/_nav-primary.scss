@@ -21,6 +21,9 @@
 			text-decoration: none;
 			border: 1px solid #fff;
 
+			@include transition-property(color background-color border-color);
+			@extend .animation-link;
+
 			&:hover {
 				color: $color-header-background;
 				background: $color-link-active;

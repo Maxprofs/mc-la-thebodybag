@@ -60,7 +60,8 @@
 		}
 
 		&:hover {
-			border-color: $color-link-active;
+			border-color: transparent;
+			background-color: $color-link-active;
 		}
 	}
 }

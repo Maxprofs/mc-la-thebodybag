@@ -1,3 +1,8 @@
+.animation-link {
+	@include transition-duration(0.3s);
+    @include transition-timing-function($ease-out-expo);
+}
+
 .table-row {
 	display: table-row;
 }
