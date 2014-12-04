@@ -43,6 +43,13 @@
 	min-height: 100%;
 }
 
+.content_block {
+	position: absolute;
+	bottom: $site-margin * 0.5;
+	left: $site-margin;
+	overflow: hidden;
+}
+
 .content-hero {
 	width: 100%;
 	overflow: hidden;
@@ -59,6 +66,7 @@
 	}
 }
 .content-photos {
+	padding-bottom: $site-margin * 0.5;
 	.content_background {
 		background-image: url("../images/background-photos.jpg");
 	}

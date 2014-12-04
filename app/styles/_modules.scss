@@ -44,8 +44,10 @@
 	user-select: none;
 }
 .soundcloud-container {
-	max-width: 50%;
-	width: 30%;
-	left: 100px;
-	top: 100px;
+	width: 642px;
+	height: 360px;
+
+	iframe {
+		height: 100%;
+	}	
 }
