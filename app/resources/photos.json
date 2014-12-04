@@ -1,11 +1,23 @@
 {
     "photos": [
         {
-            "photo": "images/video-thumbnail-ido-van.jpg"
+            "photo": "images/photos/1959409_712997445388096_2104925556_n.jpg"
         }, {
-            "photo": "images/video-thumbnail-ido-van.jpg"
+            "photo": "images/photos/10710650_10152964667097033_1740589526952303812_n.jpg"
         }, {
-            "photo": "images/video-thumbnail-ido-van.jpg"
+            "photo": "images/photos/IMG_0615.JPG"
+        }, {
+            "photo": "images/photos/IMG_0827.JPG"
+        }, {
+            "photo": "images/photos/IMG_0933.JPG"
+        }, {
+            "photo": "images/photos/IMG_1017.jpg"
+        }, {
+            "photo": "images/photos/IMG_1019.jpg"
+        }, {
+            "photo": "images/photos/IMG_1025.JPG"
+        }, {
+            "photo": "images/photos/IMG_1030.JPG"
         }
     ]
 }

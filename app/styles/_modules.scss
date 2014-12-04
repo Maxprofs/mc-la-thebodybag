@@ -3,6 +3,10 @@
     @include transition-timing-function($ease-out-expo);
 }
 
+.hw-accellerate {
+    @include transform(translateZ(0));
+}
+
 .table-row {
 	display: table-row;
 }
@@ -75,8 +79,8 @@
 .explicit-logo {
 	position: absolute;
 	right: $site-margin;
-	top: 15px;
-	width: 80px;
-	height: 48px;
+	top: 20px;
+	width: 67px;
+	height: 40px;
 	background: inline-image("inline/svg/parental-explicit.svg");
 }

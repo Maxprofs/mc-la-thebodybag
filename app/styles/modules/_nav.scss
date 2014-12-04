@@ -36,5 +36,20 @@
 				opacity: 1;
 			}
 		}
+
+		&.is-disabled {
+			opacity: 0.2;
+			pointer-events: none;
+			cursor: default;
+
+			&:hover {
+				.icon {
+					opacity: 1;
+				}
+				.icon-active {
+					opacity: 0;
+				}		
+			}
+		}
 	}
 }

@@ -41,6 +41,13 @@ module.exports = function (grunt) {
           livereload: true
         }
       },
+      json: {
+        files: ['<%= config.app %>/resources/{,*/}{,*/}{,*/}*.*'],
+        tasks: ['requirejs:dev'],
+        options: {
+          livereload: true
+        }
+      },
       jstest: {
         files: ['test/spec/{,*/}*.js'],
         tasks: ['test:watch']

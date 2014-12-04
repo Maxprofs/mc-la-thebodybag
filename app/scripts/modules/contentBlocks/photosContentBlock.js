@@ -49,7 +49,7 @@ define(
 				$.getJSON("resources/photos.json")
 					.done(function(data) {
 						if(data.photos.length) {
-							console.log('_loadPhotoResources: ', data.photos);
+							_this.photoData = data.photos;
 							_this.els.$thumbnail.on('click', _onThumbnailSelected);
 						}
 					})
@@ -62,11 +62,11 @@ define(
 				});
 			};
 
-			function _onThumbnailSelected(data) {
+			function _onThumbnailSelected() {
 				if(typeof _this.photoViewBox === 'undefined') {
 					_this.photoViewBox = new PhotoViewBox(_this.app, $('#photosContentBlock'));
 					_this.photoViewBox.signals.deactivated.add(_onPhotoViewBoxDeactivated);
-					_this.photoViewBox.activate(data);
+					_this.photoViewBox.activate(_this.photoData);
 					_this.resize();
 				}
 			};

@@ -101,7 +101,7 @@ define(
                     width: (window.innerWidth - 80) + 'px',
                     height: videoHeight + 'px',
                     left: '40px',
-                    top: Math.floor(winHeight * 0.5 - videoHeight * 0.5) + 'px'
+                    top: Math.floor(winHeight * 0.5 - videoHeight * 0.5 + 15) + 'px'
                 });
 
                 _this.els.$title.css({
@@ -124,21 +124,21 @@ define(
                 _this.els.$container = _this.els.$wrapper.find('.viewbox_embed');
 
                 _this.els.$closeButton = _this.els.$viewbox.find('.nav_button-close');
-                _this.els.$title = _this.els.$viewbox.find('.viewbox_title');
 
+                _this.els.$title = _this.els.$viewbox.find('.viewbox_title');
                 _this.els.$title.html(videoData.title);
+
+                _this.els.$closeButton.one('click', _this.deactivate);
+                _this.videoData = videoData;
 
                 TweenMax.set(_this.els.$viewbox, {width: 0});
                 TweenMax.to(_this.els.$viewbox, 1.5, {width: '100%', ease: Expo.easeInOut, onComplete: function(){
                         _loadVideo(videoData.videoId);
                 }});
-
-                _this.els.$closeButton.on('click', _this.deactivate);
-
-                _this.videoData = videoData;
             };
 
             _this.deactivate = function deactivate() {
+                _this.els.$closeButton.off('click', _this.deactivate);
                 TweenMax.to(_this.els.$viewbox, 1.5, {width: 0, ease: Expo.easeInOut, onComplete: function(){
                     _onDeactivateComplete()
                 }});

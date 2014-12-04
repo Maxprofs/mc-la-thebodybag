@@ -3,6 +3,7 @@
     position: absolute;
     right: $site-margin;
     top: 14px;
+    z-index: 1;
 
     .nav_buttons {
         .nav_button {
@@ -18,10 +19,35 @@
                     background: inline-image("inline/svg/icon-close-active.svg");
                 }
             }
+            &.nav_button-prev {
+                .icon {
+                    background: inline-image("inline/svg/icon-arrow-left.svg");
+                }
+                .icon-active {
+                    background: inline-image("inline/svg/icon-arrow-left-active.svg");
+                }
+            }
+            &.nav_button-next {
+                .icon {
+                    background: inline-image("inline/svg/icon-arrow-right.svg");
+                }
+                .icon-active {
+                    background: inline-image("inline/svg/icon-arrow-right-active.svg");
+                }
+            }
+
+            &:not(:last-child) {
+                margin-right: 10px;
+            }
 
             &:hover {
                 border-color: transparent;
                 background-color: $color-link-active;
+            }
+
+            &.is-disabled:hover {
+                border-color: #FFF;
+                background-color: transparent;
             }
         }
     }
