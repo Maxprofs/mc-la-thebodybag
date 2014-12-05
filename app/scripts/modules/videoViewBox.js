@@ -85,7 +85,7 @@ define(
                 if(typeof _this.player !== 'undefined') {
                     _this.player.destroy();
                 }
-                
+
                 _this.player = new YT.Player(_this.els.$container[0], {
                     width: '854',
                     height: '480',
@@ -120,6 +120,16 @@ define(
                 if(_this.activeVideoId - 1 >= 0) {
                     _this.activeVideoId--;
                     _swapVideos();
+                }
+            };
+
+            function _onKeyUp(e) {
+                if(e.keyCode === 37) {
+                    _showPrevVideo();
+                } else if(e.keyCode === 39) {
+                    _showNextVideo();
+                } else if(e.keyCode === 27) {
+                    _this.deactivate();
                 }
             };
 
@@ -208,12 +218,15 @@ define(
                 }});
 
                 _updateNav();
+                $(window).on('keyup', _onKeyUp);
             };
 
             _this.deactivate = function deactivate() {
                 _this.els.$closeButton.off('click', _this.deactivate);
                 _this.els.$nextButton.off('click', _showNextVideo);
                 _this.els.$prevButton.off('click', _showPrevVideo);
+                $(window).off('keyup', _onKeyUp);
+
                 TweenMax.to(_this.els.$viewbox, 1.5, {width: 0, ease: Expo.easeInOut, onComplete: function(){
                     _onDeactivateComplete()
                 }});
