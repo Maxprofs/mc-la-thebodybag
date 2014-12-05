@@ -30,6 +30,8 @@ define(
 
             _this.htmlContent = content;
 
+            _this.activeVideoId = 0;
+
 /////////////
 //////////////// PRIVATE METHODS
 ///
@@ -55,16 +57,35 @@ define(
             };
 
             function _onPlayerReady() {
-                console.log('_onPlayerReady');
-                TweenMax.set(_this.els.$wrapper, {visibility: 'visible'});
-                TweenMax.to(_this.els.$wrapper, 0.6, {opacity: 1, ease: Strong.easeOut, delay: 1});
+                console.log('[modules/videoViewBox] - _onPlayerReady()');
+                _showVideo();
+                _updateNav();
             };
 
             function _onPlayerStateChange() {
-                console.log('_onPlayerStateChange');
+                console.log('[modules/videoViewBox] - _onPlayerStateChange()');
+            };
+
+            function _showVideo() {
+                console.log('[modules/videoViewBox] - _showVideo()');
+                TweenMax.set(_this.els.$wrapper, {visibility: 'visible'});
+                TweenMax.to(_this.els.$wrapper, 0.6, {opacity: 1, ease: Strong.easeOut});
+            };
+
+            function _hideVideo() {
+                console.log('[modules/videoViewBox] - _hideVideo()');
+                TweenMax.to(_this.els.$wrapper, 0.4, {opacity: 0, ease: Strong.easeOut, onComplete: function() {
+                    TweenMax.set(_this.els.$wrapper, {visibility: 'hidden'});
+                    _onVideoHidden();
+                }});
             };
 
             function _loadVideo(videoId) {
+                console.log('[modules/videoViewBox] - _loadVideo() - videoId: ', videoId);
+                if(typeof _this.player !== 'undefined') {
+                    _this.player.destroy();
+                }
+                
                 _this.player = new YT.Player(_this.els.$container[0], {
                     width: '854',
                     height: '480',
@@ -82,6 +103,50 @@ define(
                         'onStateChange': _onPlayerStateChange
                     }
                 });
+            };
+
+            function _showNextVideo() {
+                console.log('[modules/videoViewBox] - _showNextVideo()');
+
+                if(_this.activeVideoId + 1 < _this.videoData.length) {
+                    _this.activeVideoId++;
+                    _swapVideos();
+                }
+            };
+            
+            function _showPrevVideo() {
+                console.log('[modules/videoViewBox] - _showPrevVideo()');
+
+                if(_this.activeVideoId - 1 >= 0) {
+                    _this.activeVideoId--;
+                    _swapVideos();
+                }
+            };
+
+            function _swapVideos() {
+                console.log('[modules/videoViewBox] - _swapVideos()');
+                _updateNav();
+
+                _hideVideo();
+            };
+
+            function _onVideoHidden() {
+                console.log('[modules/videoViewBox] - _onVideoHidden() - remove video and load the new one!');
+                _loadVideo(_this.videoData[_this.activeVideoId].videoId);
+            };
+
+            function _updateNav() {
+                if(_this.activeVideoId > 0) {
+                    _this.els.$prevButton.removeClass('is-disabled');
+                } else {
+                    _this.els.$prevButton.addClass('is-disabled');
+                }
+
+                if(_this.activeVideoId < _this.videoData.length - 1) {
+                    _this.els.$nextButton.removeClass('is-disabled');
+                } else {
+                    _this.els.$nextButton.addClass('is-disabled');
+                }
             };
 
 /////////////
@@ -109,7 +174,9 @@ define(
                 })
             };
 
-            _this.activate = function activate(videoData) {
+            _this.activate = function activate(videoData, index) {
+                _this.activeVideoId = index;
+
                 _this.els.$viewbox = $(_this.htmlContent);
                 _this.els.$body.append(_this.els.$viewbox);
                 _this.els.$body.css({'overflow': 'hidden'});
@@ -124,21 +191,29 @@ define(
                 _this.els.$container = _this.els.$wrapper.find('.viewbox_embed');
 
                 _this.els.$closeButton = _this.els.$viewbox.find('.nav_button-close');
+                _this.els.$prevButton = _this.els.$viewbox.find('.nav_button-prev');
+                _this.els.$nextButton = _this.els.$viewbox.find('.nav_button-next');
 
                 _this.els.$title = _this.els.$viewbox.find('.viewbox_title');
                 _this.els.$title.html(videoData.title);
 
+                _this.els.$nextButton.on('click', _showNextVideo);
+                _this.els.$prevButton.on('click', _showPrevVideo);
                 _this.els.$closeButton.one('click', _this.deactivate);
                 _this.videoData = videoData;
 
                 TweenMax.set(_this.els.$viewbox, {width: 0});
                 TweenMax.to(_this.els.$viewbox, 1.5, {width: '100%', ease: Expo.easeInOut, onComplete: function(){
-                        _loadVideo(videoData.videoId);
+                        _loadVideo(_this.videoData[_this.activeVideoId].videoId);
                 }});
+
+                _updateNav();
             };
 
             _this.deactivate = function deactivate() {
                 _this.els.$closeButton.off('click', _this.deactivate);
+                _this.els.$nextButton.off('click', _showNextVideo);
+                _this.els.$prevButton.off('click', _showPrevVideo);
                 TweenMax.to(_this.els.$viewbox, 1.5, {width: 0, ease: Expo.easeInOut, onComplete: function(){
                     _onDeactivateComplete()
                 }});

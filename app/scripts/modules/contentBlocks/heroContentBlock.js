@@ -80,6 +80,7 @@
 
 			function _onVideoMetadataLoaded() {
 				_this.heroVideoDuration = _this.heroVideoEl.duration;
+				_startUpdatingProgressBar();
 			};
 
 			function _onVideoCanPlay() {

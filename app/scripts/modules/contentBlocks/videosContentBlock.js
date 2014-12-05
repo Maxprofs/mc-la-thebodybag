@@ -68,18 +68,18 @@ define(
 				_this.data = data;
 
 				for(var i = 0; i < _this.data.length; i++) {
-					var videoThumbnail = new VideoThumbnail(_this.app, _this.els.$thumbnails, _this.data[i]);
+					var videoThumbnail = new VideoThumbnail(_this.app, _this.els.$thumbnails, _this.data[i], i);
 					_this.thumbnails.push(videoThumbnail);
 
 					videoThumbnail.signals.selected.add(_onThumbnailSelected);
 				}
 			};
 
-			function _onThumbnailSelected(data) {
+			function _onThumbnailSelected(index) {
 				if(typeof _this.videoViewBox === 'undefined') {
 					_this.videoViewBox = new VideoViewBox(_this.app, $('#videosContentBlock'));
 					_this.videoViewBox.signals.deactivated.add(_onVideoViewBoxDeactivated);
-					_this.videoViewBox.activate(data);
+					_this.videoViewBox.activate(_this.data, index);
 					_this.resize();
 				}
 			};

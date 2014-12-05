@@ -15,11 +15,12 @@ define(
 
         'use strict';
 
-        function VideoThumbnail(app, el, data) {
+        function VideoThumbnail(app, el, data, index) {
             var _this = this;
             _this.app = app;
             _this.el = el;
             _this.data = data;
+            _this.index = index;
             
             // Signals
             _this.signals = {};
@@ -48,7 +49,7 @@ define(
             };
 
             function _onThumbnailSelect(e) {
-                _this.signals.selected.dispatch(_this.data);
+                _this.signals.selected.dispatch(_this.index);
             };
 
 /////////////
