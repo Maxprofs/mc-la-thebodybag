@@ -68,6 +68,27 @@
         }
     }
 
+    .thumbnail_zoom {
+        position: absolute;
+        width: 82px;
+        height: 82px;
+        left: 50%;
+        top: 50%;
+        margin-left: -41px;
+        margin-top: -41px;
+        opacity: 0;
+        border: 1px solid #FFF;
+
+        @include transform(scale(2));
+        @include transition-property(opacity transform);
+        @include transition-duration(0.4s);
+        @include transition-timing-function($ease-out-back);
+        
+        .icon {
+            background: inline-image("inline/svg/icon-zoom.svg");
+        }
+    }
+
     &:hover {
         .thumbnail_bg {
             opacity: 0.8;
@@ -98,18 +119,28 @@
         .thumbnail_overlay {
             position: absolute;
             width: 100%;
-            height: 150%;
-            background: rgba(0, 0, 0, 0.8);
-            top: 100%;
+            height: 100%;
 
-            @include transition-property(top);
-            @include transition-duration(0.3s);
-            @include transition-timing-function($ease-out-back);
+            .thumbnail_overlaybg {
+                position: absolute;
+                width: 100%;
+                height: 150%;
+                background: rgba(0, 0, 0, 0.8);
+                top: 100%;
+                @include transition-property(top);
+                @include transition-duration(0.3s);
+                @include transition-timing-function($ease-out-back);
+            }
         }
 
         &:hover {
-            .thumbnail_overlay {
+            .thumbnail_overlaybg {
                 top: 0;
+            }
+
+            .thumbnail_zoom {
+                opacity: 1;
+                @include transform(scale(1));
             }
         }
     }
