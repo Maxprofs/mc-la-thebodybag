@@ -4,6 +4,7 @@ define(
 		'signals',
 		'tweenmax',
 		'modules/contentBlocks/heroContentBlock',
+		'modules/contentBlocks/musicContentBlock',
 		'modules/contentBlocks/videosContentBlock',
 		'modules/contentBlocks/photosContentBlock'
 	],
@@ -13,6 +14,7 @@ define(
 		signals,
 		TweenMax,
 		HeroContentBlock,
+		MusicContentBlock,
 		VideosContentBlock,
 		PhotosContentBlock
 	) {
@@ -32,10 +34,14 @@ define(
 			_this.signals = {};
 			_this.signals.heroNavbarSelected = new signals.Signal();
 			_this.signals.contentBlockActivated = new signals.Signal();
+			_this.signals.ready = new signals.Signal();
+			_this.signals.loaded = new signals.Signal();
 
 			_this.$window = $(window);
 			_this.activeContentBlockId = 0;
 			_this.scrollingContent = false;
+
+			_this.contentBlocks = [];
 
 /////////////
 //////////////// PRIVATE METHODS
@@ -43,11 +49,21 @@ define(
 			function _init() {
 				// Content blocks
 				_this.heroContentBlock = new HeroContentBlock(_this.app, $('#heroContentBlock'));
+				_this.heroContentBlock.signals.loaded.add(_onContentBlockLoaded);
 				_this.heroContentBlock.signals.navbarSelected.add(_onNavbarSelected);
+				_this.contentBlocks.push(_this.heroContentBlock);
+			
+				_this.musicContentBlock = new MusicContentBlock(_this.app, $('#musicContentBlock'));
+				_this.musicContentBlock.signals.loaded.add(_onContentBlockLoaded);
+				_this.contentBlocks.push(_this.musicContentBlock);
 
 				_this.videosContentBlock = new VideosContentBlock(_this.app, $('#videosContentBlock'));
-
+				_this.videosContentBlock.signals.loaded.add(_onContentBlockLoaded);
+				_this.contentBlocks.push(_this.videosContentBlock);
+	
 				_this.photosContentBlock = new PhotosContentBlock(_this.app, $('#photosContentBlock'));
+				_this.photosContentBlock.signals.loaded.add(_onContentBlockLoaded);
+				_this.contentBlocks.push(_this.photosContentBlock);
 
 				// Signal handlers
 				_this.app.signals.appScrolled.add(function() {
@@ -56,6 +72,21 @@ define(
 				_this.app.signals.appResized.add(function() {
 					_onResized();
 				});
+
+				// Start preloading the contents
+				_this.heroContentBlock.load();
+			};
+
+			function _onContentBlockLoaded(contentBlock) {
+				if(contentBlock === _this.heroContentBlock) {
+					_this.musicContentBlock.load();
+				} else if(contentBlock === _this.musicContentBlock) {
+					_this.videosContentBlock.load();
+				} else if(contentBlock === _this.videosContentBlock) {
+					_this.photosContentBlock.load();
+				} else if(contentBlock === _this.photosContentBlock) {
+					_this.signals.loaded.dispatch();
+				}
 			};
 
 			/**
@@ -68,6 +99,7 @@ define(
 				});
 
 				_this.heroContentBlock.resize();
+				_this.musicContentBlock.resize();
 				_this.videosContentBlock.resize();
 				_this.photosContentBlock.resize();
 
@@ -91,7 +123,9 @@ define(
 			        	if(scrollPosition >=  (_getContentBlockPosY(i) - scrollOffset)) {
 							_this.activeContentBlockId = i;
 							_this.signals.contentBlockActivated.dispatch(i);
-							_this.setHeroVideoState(i);
+							if(typeof _this.heroContentBlock !== 'undefined') {
+								_this.setHeroVideoState(i);
+							}
 				        	break;
 				        }
 			        }
@@ -124,7 +158,11 @@ define(
 		     * Return the requested contentblock's top position
 		     */
 		    function _getContentBlockPosY(id) {
-		    	return $(_this.els.$contents[id]).offset().top - _this.app.els.$appHeader.height();
+		    	if(typeof _this.els.$contents[id] !== 'undefined') {
+		    		return $(_this.els.$contents[id]).offset().top - _this.app.els.$appHeader.height();
+		    	} else {
+		    		return 0;
+		    	}
 		    };
 
 /////////////
@@ -137,7 +175,9 @@ define(
 				_this.activeContentBlockId = id;
 				_scrollTo(_getContentBlockPosY(_this.activeContentBlockId));
 
-				_this.setHeroVideoState(id);
+				if(typeof _this.heroContentBlock !== 'undefined') {
+					_this.setHeroVideoState(id);
+				}
 			};
 
 			/*

@@ -268,11 +268,17 @@ module.exports = function (grunt) {
           '<%= config.dist %>',
           '<%= config.dist %>/images',
           '<%= config.dist %>/styles'
-        ]
+        ],
+        patterns: {
+          js: [
+            [/(images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm, 'Update the JS to reference our revved images']
+          ]
+        }
       },
       html: ['<%= config.dist %>/{,*/}*.html'],
       css: ['<%= config.dist %>/styles/{,*/}*.css'],
-      json: ['<%= config.dist %>/resources/{,*/}*.json']
+      json: ['<%= config.dist %>/resources/{,*/}*.json'],
+      js: ['<%= config.dist %>/scripts/{,*/}*.js']
     },
 
     // The following *-min tasks produce minified files in the dist folder

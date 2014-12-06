@@ -26,7 +26,7 @@
 			_this.app = app;
 			
 			// Signals
-			_this.signals = {};
+			_this.signals = _this.signals || {};
 			_this.signals.heroResized = new signals.Signal();
 			_this.signals.navbarSelected = new signals.Signal();
 
@@ -81,6 +81,9 @@
 			function _onVideoMetadataLoaded() {
 				_this.heroVideoDuration = _this.heroVideoEl.duration;
 				_startUpdatingProgressBar();
+				_this.resize();
+
+				_this.signals.loaded.dispatch(_this);
 			};
 
 			function _onVideoCanPlay() {
@@ -221,8 +224,9 @@
 				}
 			};
 
-
-			$(_init());
+			_this.load = function load() {
+				_init();
+			};
 		}
 
 		HeroContentBlock.prototype = new ContentBlock();

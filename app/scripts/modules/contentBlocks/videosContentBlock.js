@@ -30,16 +30,24 @@ define(
 			_this.app = app;
 			
 			// Signals
-			_this.signals = {};
+			_this.signals = _this.signals || {};
 
 			// View elements
 			_this.els = {};
 			_this.els._$parent = el;
 			_this.els.$contents = _this.els._$parent.find('.content_body');
+			_this.els.$contentsBackground = _this.els._$parent.find('.content_background');
 			_this.els.$thumbnails = _this.els._$parent.find('.thumbnails');
 
 			_this.data = {};
 			_this.thumbnails = [];
+			
+			// Dynamically loaded images
+			_this.images = [
+				'images/background-videos.jpg'
+			];
+
+			_this.loadedThumbnailCount = 0;
 
 /////////////
 //////////////// PRIVATE METHODS
@@ -52,7 +60,11 @@ define(
 				$.getJSON("resources/videos.json")
 					.done(function(data) {
 						if(data.videos.length) {
-							_addThumbnails(data.videos);
+							_this.data = data.videos;
+							for(var i = 0; i < data.videos.length; i++) {
+								_this.images.push(data.videos[i].thumbnail);
+							}
+							_preloadImages();
 						}
 					})
 					.fail(function() {
@@ -64,9 +76,19 @@ define(
 				});
 			};
 
-			function _addThumbnails(data) {
-				_this.data = data;
+			function _preloadImages() {
+				_this.app.imagePreloader.preload(_this.images, function() {_onImagesPreloaded();});
+			};
 
+			function _onImagesPreloaded() {
+				_this.els.$contentsBackground.css({
+					'background-image': 'url(' + _this.images[0] + ')'
+				});
+				_addThumbnails();
+				_this.signals.loaded.dispatch(_this);
+			};
+
+			function _addThumbnails() {
 				for(var i = 0; i < _this.data.length; i++) {
 					var videoThumbnail = new VideoThumbnail(_this.app, _this.els.$thumbnails, _this.data[i], i);
 					_this.thumbnails.push(videoThumbnail);
@@ -97,7 +119,9 @@ define(
 				}
 			};
 
-			$(_init());
+			_this.load = function load() {
+				_init();
+			};
 		}
 
 		VideosContentBlock.prototype = new ContentBlock();

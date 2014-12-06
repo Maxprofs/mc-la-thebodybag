@@ -1,11 +1,13 @@
 define(
 	[
 		'jquery',
+		'signals',
 		'tweenmax'
 	],
 
 	function(
 		$,
+		signals,
 		TweenMax
 	) {
 
@@ -16,6 +18,9 @@ define(
 			
 			var app = app;
 			var _this = this;
+
+			_this.signals = {};
+			_this.signals.loaded = new signals.Signal();
 		}
 
 		return ContentBlock;

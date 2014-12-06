@@ -4,6 +4,7 @@ define(
 		'signals',
 		'fastclick',
 		'tweenmax',
+		'modules/imagePreloader',
 		'modules/primaryNav',
 		'modules/contentBlocks/contentBlockGroup'
 	],
@@ -13,6 +14,7 @@ define(
 		signals,
 		fastclick,
 		TweenMax,
+		ImagePreloader,
 		PrimaryNav,
 		ContentBlockGroup
 	) {
@@ -42,12 +44,15 @@ define(
 //////////////// PRIVATE METHODS
 ///
 			function _init() {
+				_this.imagePreloader = new ImagePreloader(_this.app);
+				
 				_this.primaryNav = new PrimaryNav(_this, $('#primaryNav'));
 				_this.primaryNav.signals.selected.add(_onPrimaryNavSelected);
 
 				_this.contentBlockGroup = new ContentBlockGroup(_this, $('#contentBlockGroup'));
 				_this.contentBlockGroup.signals.heroNavbarSelected.add(_onHeroNavbarSelected);
 				_this.contentBlockGroup.signals.contentBlockActivated.add(_onContentBlockActivated);
+				_this.contentBlockGroup.signals.loaded.add(_onContentBlocksLoaded);
 
 				// Handle app scrolling
 				_this.$window.on("scroll", _onScrolled);
@@ -94,7 +99,11 @@ define(
 		    	if(_this.primaryNav.getSelected() !== contentBlockId) {
 		    		_this.primaryNav.setSelected(contentBlockId);
 		    	}
-		    }
+		    };
+
+		    function _onContentBlocksLoaded() {
+		    	console.log('contents Loaded, lets roll!');
+		    };
 
 			// Self initialising
 			$(_init());

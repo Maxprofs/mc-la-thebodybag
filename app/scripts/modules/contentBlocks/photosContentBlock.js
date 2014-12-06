@@ -28,21 +28,32 @@ define(
 			_this.app = app;
 			
 			// Signals
-			_this.signals = {};
+			_this.signals = _this.signals || {};
 
 			// View elements
 			_this.els = {};
 			_this.els._$parent = el;
 			_this.els.$contents = _this.els._$parent.find('.content_body');
+			_this.els.$contentsBackground = _this.els._$parent.find('.content_background');
 			_this.els.$thumbnail = _this.els._$parent.find('.thumbnail');
 
 			_this.data = {};
+
+			// Dynamically loaded images
+			_this.images = [
+				'images/background-photos.jpg',
+				'images/photo-thumbnail.jpg'
+			];
 
 /////////////
 //////////////// PRIVATE METHODS
 ///
 			function _init() {
-				_loadPhotoResources();
+				_preloadImages();
+			};
+
+			function _preloadImages() {
+				_this.app.imagePreloader.preload(_this.images, function() {_onImagesPreloaded();});
 			};
 
 			function _loadPhotoResources() {
@@ -51,6 +62,8 @@ define(
 						if(data.photos.length) {
 							_this.photoData = data.photos;
 							_this.els.$thumbnail.on('click', _onThumbnailSelected);
+
+							_this.signals.loaded.dispatch(_this);
 						}
 					})
 					.fail(function() {
@@ -75,16 +88,30 @@ define(
 				_this.photoViewBox = undefined;
 			};
 
+			function _onImagesPreloaded () {				
+				_this.els.$contentsBackground.css({
+					'background-image': 'url(' + _this.images[0] + ')'
+				});
+				_this.els.$thumbnail.css({
+					'background-image': 'url(' + _this.images[1] + ')'
+				});
+				
+				_loadPhotoResources();
+			};
+
 /////////////
 //////////////// PUBLIC METHODS
 ///
+
 			_this.resize = function resize() {
 				if(typeof _this.photoViewBox !== 'undefined') {
 					_this.photoViewBox.resize();
 				}
 			};
 
-			$(_init());
+			_this.load = function load() {
+				_init();
+			};
 		}
 
 		PhotosContentBlock.prototype = new ContentBlock();
