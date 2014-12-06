@@ -6,6 +6,7 @@ define(
 		'tweenmax',
 		'modules/imagePreloader',
 		'modules/primaryNav',
+		'modules/splashScreen',
 		'modules/contentBlocks/contentBlockGroup'
 	],
 
@@ -16,6 +17,7 @@ define(
 		TweenMax,
 		ImagePreloader,
 		PrimaryNav,
+		SplashScreen,
 		ContentBlockGroup
 	) {
 
@@ -40,6 +42,8 @@ define(
 			_this.signals.appResized = new signals.Signal();
 			_this.signals.appScrolled = new signals.Signal();
 
+			_this.contentsReady = false;
+
 /////////////
 //////////////// PRIVATE METHODS
 ///
@@ -48,6 +52,9 @@ define(
 				
 				_this.primaryNav = new PrimaryNav(_this, $('#primaryNav'));
 				_this.primaryNav.signals.selected.add(_onPrimaryNavSelected);
+
+				_this.splashScreen = new SplashScreen(_this, $('#splashScreen'));
+				_this.splashScreen.signals.hidden.add(_onSplashScreenHidden);
 
 				_this.contentBlockGroup = new ContentBlockGroup(_this, $('#contentBlockGroup'));
 				_this.contentBlockGroup.signals.heroNavbarSelected.add(_onHeroNavbarSelected);
@@ -66,7 +73,6 @@ define(
 		     * Handle the window resize event
 		    */
 			function _onResized() {
-				// Sending out a signal
 				_this.signals.appResized.dispatch();
 			};
 
@@ -74,7 +80,14 @@ define(
 		     * Handle the window scroll event
 		    */
 		    function _onScrolled(e) {
-		        _this.signals.appScrolled.dispatch();
+		        if(_this.contentsReady) {
+					_this.signals.appScrolled.dispatch();
+				}
+		    };
+
+		    function _onSplashScreenHidden() {
+		    	_this.splashScreen.signals.hidden.remove(_onSplashScreenHidden);
+		    	delete _this.splashScreen;
 		    };
 
 		    /*
@@ -102,7 +115,10 @@ define(
 		    };
 
 		    function _onContentBlocksLoaded() {
+		    	_this.contentsReady = true;
 		    	console.log('contents Loaded, lets roll!');
+
+		    	_this.splashScreen.hide();
 		    };
 
 			// Self initialising
