@@ -3,14 +3,16 @@
 		'jquery',
 		'signals',
 		'tweenmax',
-		'modules/contentBlocks/contentBlock'
+		'modules/contentBlocks/contentBlock',
+		'text!templates/hero-block-video.html'
 	],
 
 	function(
 		$,
 		signals,
 		TweenMax,
-		ContentBlock
+		ContentBlock,
+		videoContent
 	) {
 
 		'use strict';
@@ -24,6 +26,8 @@
 
 			var _this = this;
 			_this.app = app;
+
+			_this.videoHTMLContent = videoContent;
 			
 			// Signals
 			_this.signals = _this.signals || {};
@@ -33,36 +37,53 @@
 			// View elements
 			_this.els = {};
 			_this.els._$parent = el;
-			_this.els.$mash = _this.els._$parent.find('.mash');
-			_this.els.$video = _this.els._$parent.find('.video-hero');
-			_this.els.$playButton = _this.els._$parent.find('.nav_button-play');
-			_this.els.$muteButton = _this.els._$parent.find('.nav_button-mute');
-			_this.els.$navbar = _this.els._$parent.find('.navbar');
-			_this.els.$progressBarPlayed = _this.els._$parent.find('.progressbar-played');
-			_this.els.$progressBarBuffered = _this.els._$parent.find('.progressbar-buffered');
-
-			_this.heroVideoEl = _this.els.$video[0];
-			_this.heroVideoVolume = 1;
-			_this.heroVideoDuration = 0;
-			window.volume = _this.heroVideoVolume;
-
-			_this.isPlaying = false;
-			_this.wasPlaying = false;
+			_this.els.$mash = _this.els._$parent.find('.content_mash');
 
 /////////////
 //////////////// PRIVATE METHODS
 ///
 			function _init() {
-				// Hero video controls
-				_this.els.$playButton.on('click', _onPlayButtonClick);
-				_this.els.$muteButton.on('click', _onMuteButtonClick);
-
+				_this.els.$navbar = _this.els._$parent.find('.navbar');
 				_this.els.$navbar.on('click', _onNavbarClick);
+
+				// If the browser supports video, we initialise the player...
+				var videoEl = document.createElement('video');
+				if(typeof videoEl !== 'undefined' && videoEl.canPlayType !== 'undefined') {
+					_initVideo();
+				}
+			};
+
+			function _initVideo() {
+				$(_this.videoHTMLContent).insertAfter(_this.els.$mash);
+
+				_this.els.$video = _this.els._$parent.find('.video-hero');
+				_this.els.$playButton = _this.els._$parent.find('.nav_button-play');
+				_this.els.$muteButton = _this.els._$parent.find('.nav_button-mute');
+				_this.els.$progressBarPlayed = _this.els._$parent.find('.progressbar-played');
+				_this.els.$progressBarBuffered = _this.els._$parent.find('.progressbar-buffered');
+
+				_this.heroVideoEl = _this.els.$video[0];
+				_this.heroVideoVolume = 1;
+				_this.heroVideoDuration = 0;
+				window.volume = _this.heroVideoVolume;
+
+				_this.isPlaying = false;
+				_this.wasPlaying = false;
+
+				// Set the right video format
+				if(_this.heroVideoEl.canPlayType('video/mp4')) {
+					_this.heroVideoEl.src = "videos/mc-la-hero.mp4";
+				} else if(_this.heroVideoEl.canPlayType('video/webm')) {
+					_this.heroVideoEl.src = "videos/mc-la-hero.webm";
+				}
 
 				_this.heroVideoEl.addEventListener("canplay", _onVideoCanPlay);
 				_this.heroVideoEl.addEventListener("loadedmetadata", _onVideoMetadataLoaded);
 				_this.heroVideoEl.addEventListener('ended', _onVideoFinished);
-			};
+
+				_this.els.$playButton.on('click', _onPlayButtonClick);
+				_this.els.$muteButton.on('click', _onMuteButtonClick);
+			}
 
 			function _onVideoFinished(e) {
 				_this.els.$playButton.removeClass('is-active');
@@ -79,6 +100,7 @@
 			};
 
 			function _onVideoMetadataLoaded() {
+				console.log('[modules/contentBlocks/heroContentBlock] - _onVideoMetadataLoaded: ', _this.heroVideoEl.duration);
 				_this.heroVideoDuration = _this.heroVideoEl.duration;
 				_startUpdatingProgressBar();
 				_this.resize();
@@ -87,8 +109,8 @@
 			};
 
 			function _onVideoCanPlay() {
+				console.log('[modules/contentBlocks/heroContentBlock] - _onVideoCanPlay');
 				_this.heroVideoEl.removeEventListener("canplay", _onVideoCanPlay);
-				// _this.els.$playButton.click();
 			};
 
 			function _getBufferedPercent() {
