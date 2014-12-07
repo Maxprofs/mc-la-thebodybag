@@ -14,7 +14,7 @@
     .progressbar-played,
     .progressbar-current {
         @extend .progressbar;
-        background: rgba(15, 201, 120, 1);
+        background: $color-link-active;
     }
     .progressbar-buffered {
         @extend .progressbar;
