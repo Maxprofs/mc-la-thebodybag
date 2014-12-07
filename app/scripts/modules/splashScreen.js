@@ -20,6 +20,7 @@ define(
             // View elements
             _this.els = {};
             _this.els._$parent = el;
+            _this.els.$body = $('body');
 
             // Signals
             _this.signals = {};
@@ -28,7 +29,9 @@ define(
 /////////////
 //////////////// PRIVATE METHODS
 ///
-            
+            function _init() {
+                _this.els.$body.css({'overflow': 'hidden'});
+            };
 
 /////////////
 //////////////// PUBLIC METHODS
@@ -40,9 +43,12 @@ define(
             _this.hide = function hide() {
                 TweenMax.to(_this.els._$parent, 2.1, {opacity: 0, onComplete: function() {
                     _this.els._$parent.remove();
+                    _this.els.$body.css({'overflow': 'auto'});
                     _this.signals.hidden.dispatch();
                 }});
             };
+
+            $(_init());
         }
 
         return SplashScreen;

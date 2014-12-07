@@ -33,6 +33,7 @@
  	background-image: inline-image("inline/svg/mc-la-logo.svg");
  	background-repeat: no-repeat;
  	@include clearfix;
+    cursor: pointer;
 }
 
 
@@ -84,6 +85,7 @@
 	width: 67px;
 	height: 40px;
 	background: inline-image("inline/svg/parental-explicit.svg");
+    opacity: 0.5;
 }
 
 .splash {

@@ -166,6 +166,7 @@ define(
                     visibility: 'hidden'
                 });
                 _this.els.$container = _this.els.$wrapper.find('.videoembed');
+                _this.els.$logo = _this.els.$viewbox.find('.logo-header');
 
                 _this.els.$closeButton = _this.els.$viewbox.find('.nav_button-close');
                 _this.els.$prevButton = _this.els.$viewbox.find('.nav_button-prev');
@@ -174,6 +175,7 @@ define(
                 _this.els.$nextButton.on('click', _showNextPhoto);
                 _this.els.$prevButton.on('click', _showPrevPhoto);
                 _this.els.$closeButton.one('click', _this.deactivate);
+                _this.els.$logo.one('click', _this.deactivate);
 
                 _this.els.$progressBarCurrent = _this.els.$viewbox.find('.progressbar-current');
                 _this.els.$progressBarTotal = _this.els.$viewbox.find('.progressbar-total');

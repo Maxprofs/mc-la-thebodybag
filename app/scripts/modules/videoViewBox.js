@@ -199,6 +199,7 @@ define(
                     visibility: 'hidden'
                 });
                 _this.els.$container = _this.els.$wrapper.find('.viewbox_embed');
+                _this.els.$logo = _this.els.$viewbox.find('.logo-header');
 
                 _this.els.$closeButton = _this.els.$viewbox.find('.nav_button-close');
                 _this.els.$prevButton = _this.els.$viewbox.find('.nav_button-prev');
@@ -210,6 +211,7 @@ define(
                 _this.els.$nextButton.on('click', _showNextVideo);
                 _this.els.$prevButton.on('click', _showPrevVideo);
                 _this.els.$closeButton.one('click', _this.deactivate);
+                _this.els.$logo.one('click', _this.deactivate);
                 _this.videoData = videoData;
 
                 TweenMax.set(_this.els.$viewbox, {width: 0});

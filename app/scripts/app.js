@@ -36,6 +36,7 @@ define(
 			_this.els.$appHeader = $('#appHeader');
 			_this.els.$appFooter = $('#appFooter');
 			_this.els.$body = $('#body');
+			_this.els.$logo = _this.els.$appHeader.find('.logo-header');
 
 			// Signals
 			_this.signals = {};
@@ -61,6 +62,8 @@ define(
 				_this.contentBlockGroup.signals.contentBlockActivated.add(_onContentBlockActivated);
 				_this.contentBlockGroup.signals.loaded.add(_onContentBlocksLoaded);
 
+				_this.els.$logo.on('click', _onHeaderLogoClicked);
+
 				// Handle app scrolling
 				_this.$window.on("scroll", _onScrolled);
 
@@ -79,10 +82,14 @@ define(
 			/**
 		     * Handle the window scroll event
 		    */
-		    function _onScrolled(e) {
+		    function _onScrolled() {
 		        if(_this.contentsReady) {
 					_this.signals.appScrolled.dispatch();
 				}
+		    };
+
+		    function _onHeaderLogoClicked() {
+		    	_onHeroNavbarSelected(0);
 		    };
 
 		    function _onSplashScreenHidden() {

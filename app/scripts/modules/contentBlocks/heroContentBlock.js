@@ -105,6 +105,9 @@
 				_startUpdatingProgressBar();
 				_this.resize();
 
+				_bruteMuteVideo();
+				_this.els.$playButton.click();
+
 				_this.signals.loaded.dispatch(_this);
 			};
 
@@ -144,6 +147,14 @@
 			    if (_this.heroVideoEl.currentTime >= _this.heroVideoDuration) {
 					_stopUpdatingProgressBar();
 				}
+			};
+
+			function _bruteMuteVideo() {
+				_this.els.$muteButton.addClass('is-active');
+				_this.hasSound = true;
+				window.volume = 0;
+				_this.heroVideoVolume = 0;
+				_this.heroVideoEl.volume = 0;
 			};
 
 			function _onPlayButtonClick(e) {
