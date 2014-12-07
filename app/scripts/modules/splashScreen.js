@@ -30,7 +30,7 @@ define(
 //////////////// PRIVATE METHODS
 ///
             function _init() {
-                _this.els.$body.addClass('is-scroll-disabled');
+                _this.app.disableAppScrolling();
             };
 
 /////////////
@@ -43,8 +43,9 @@ define(
             _this.hide = function hide() {
                 TweenMax.to(_this.els._$parent, 2.1, {opacity: 0, onComplete: function() {
                     _this.els._$parent.remove();
-                    _this.els.$body.removeClass('is-scroll-disabled');
                     _this.signals.hidden.dispatch();
+
+                    _this.app.enableAppScrolling();
                 }});
             };
 

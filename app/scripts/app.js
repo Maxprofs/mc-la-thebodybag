@@ -35,7 +35,7 @@ define(
 			_this.els = {};
 			_this.els.$appHeader = $('#appHeader');
 			_this.els.$appFooter = $('#appFooter');
-			_this.els.$body = $('#body');
+			_this.els.$body = $('body');
 			_this.els.$logo = _this.els.$appHeader.find('.logo-header');
 
 			// Signals
@@ -126,6 +126,14 @@ define(
 		    	console.log('contents Loaded, lets roll!');
 
 		    	_this.splashScreen.hide();
+		    };
+
+		    _this.disableAppScrolling = function disableAppScrolling() {
+		    	_this.els.$body.addClass('is-scroll-disabled');
+		    };
+
+		    _this.enableAppScrolling = function disableAppScrolling() {
+		    	// _this.els.$body.removeClass('is-scroll-disabled');
 		    };
 
 			// Self initialising

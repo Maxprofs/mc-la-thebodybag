@@ -59,6 +59,10 @@ define(
 				return _this.selectedIndex;
 			};
 
+			_this.getTotal = function getTotal() {
+				return _this.els.$buttons.length;
+			};
+
 			$(_init());
 		}
 

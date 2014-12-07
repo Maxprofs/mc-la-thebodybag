@@ -50,10 +50,11 @@ define(
 
             function _onDeactivateComplete() {
                 _this.els.$viewbox.remove();
-                _this.els.$body.removeClass('is-scroll-disabled');
                 _this.els.$closeButton.on('click', undefined);
 
                 _this.signals.deactivated.dispatch();
+
+                _this.app.enableAppScrolling();
             };
 
             function _onPlayerReady() {
@@ -189,7 +190,7 @@ define(
 
                 _this.els.$viewbox = $(_this.htmlContent);
                 _this.els.$body.append(_this.els.$viewbox);
-                _this.els.$body.addClass('is-scroll-disabled');
+                _this.app.disableAppScrolling();
 
                 _this.els.$viewbox = _this.els.$body.find('.viewbox-video');
                 _this.els.$viewboxWrapper = _this.els.$viewbox.find('.viewbox_wrapper');
