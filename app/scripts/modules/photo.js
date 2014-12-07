@@ -100,15 +100,15 @@ define(
 
             _this.show = function show() {
                 _this.resize();
-                TweenMax.set(_this.els.$photo, {visibility: 'visible', opacity: 0});
-                TweenMax.to(_this.els.$photo, 0.8, {opacity: 1, delay: 0.5, ease: Strong.easeOut, onComplete: function(){
+                TweenMax.set(_this.els.$photo, {visibility: 'visible', opacity: 0, scale: 1.05});
+                TweenMax.to(_this.els.$photo, 0.8, {opacity: 1, scale: 1, delay: 0.5, ease: Strong.easeOut, onComplete: function(){
                     _this.signals.photoShown.dispatch(_this.index);
                 }});
             };
 
             _this.hide = function hide() {
                 TweenMax.killTweensOf(_this.els.$photo);
-                TweenMax.to(_this.els.$photo, 0.5, {opacity: 0, onComplete: function(){
+                TweenMax.to(_this.els.$photo, 0.5, {opacity: 0, scale: 1.05, onComplete: function(){
                     TweenMax.set(_this.els.$photo, {visibility: 'hidden'});
                 }});
             };
