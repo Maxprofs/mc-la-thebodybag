@@ -61,10 +61,11 @@
         overflow: hidden;
         width: 64px;
         height: 20px;
-        top: 5px;
+        top: 6px;
         line-height: 100000px;
         text-indent: 100000px;
-        background: url(../images/voom-logo.png) 0 0 no-repeat;
+        
+        @include retina-image("../images/inline/voom-logo", 64px 20px);
     }
 }
 
