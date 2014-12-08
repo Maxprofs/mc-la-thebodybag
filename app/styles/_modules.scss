@@ -86,11 +86,11 @@
 .explicit-logo {
 	position: absolute;
 	right: $site-margin;
-	top: 20px;
-	width: 67px;
-	height: 40px;
-	background: inline-image("inline/svg/parental-explicit.svg");
-    opacity: 0.5;
+	top: 23px;
+	width: 50px;
+	height: 38px;
+	@include retina-image("../images/inline/szokimondo-szovegek", 50px 38px);
+    opacity: 0.9;
 }
 
 .splash {
