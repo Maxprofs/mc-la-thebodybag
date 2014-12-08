@@ -95,7 +95,7 @@
 			};
 
 			function _onVideoMetadataLoaded() {
-				console.log('[modules/contentBlocks/heroContentBlock] - _onVideoMetadataLoaded: ', _this.heroVideoEl.duration);
+				// console.log('[modules/contentBlocks/heroContentBlock] - _onVideoMetadataLoaded: ', _this.heroVideoEl.duration);
 				_this.heroVideoDuration = _this.heroVideoEl.duration;
 				_startUpdatingProgressBar();
 				_this.resize();
@@ -107,7 +107,7 @@
 			};
 
 			function _onVideoCanPlay() {
-				console.log('[modules/contentBlocks/heroContentBlock] - _onVideoCanPlay');
+				// console.log('[modules/contentBlocks/heroContentBlock] - _onVideoCanPlay');
 				_this.heroVideoEl.removeEventListener("canplay", _onVideoCanPlay);
 			};
 

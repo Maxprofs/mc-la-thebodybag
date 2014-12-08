@@ -44,10 +44,6 @@ define(
 				'images/background-music.jpg'
 			];
 
-			_this.tracks = [
-				"//api.soundcloud.com/tracks/13692671"
-			];
-
 			_this.script = '//w.soundcloud.com/player/api.js';
 
 /////////////
@@ -98,6 +94,10 @@ define(
 /////////////
 //////////////// PUBLIC METHODS
 ///
+			_this.stopPlaying = function stopPlaying() {
+				_this.widget.pause();
+			};
+
 			_this.resize = function resize() {
 				var boxHeight = _this.els._$parent.height();
 				var titleHeight = _this.els.$title.outerHeight();

@@ -59,6 +59,7 @@ define(
 
 				_this.videosContentBlock = new VideosContentBlock(_this.app, $('#videosContentBlock'));
 				_this.videosContentBlock.signals.loaded.add(_onContentBlockLoaded);
+				_this.videosContentBlock.signals.videoPlayed.add(_onVideoViewBoxPlayed);
 				_this.contentBlocks.push(_this.videosContentBlock);
 	
 				_this.photosContentBlock = new PhotosContentBlock(_this.app, $('#photosContentBlock'));
@@ -137,6 +138,10 @@ define(
 		    */
 			function _onHeroVideoFinished() {
 				_this.signals.heroVideoFinished.dispatch();
+			};
+
+			function _onVideoViewBoxPlayed() {
+				_this.musicContentBlock.stopPlaying();
 			};
 
 			/**

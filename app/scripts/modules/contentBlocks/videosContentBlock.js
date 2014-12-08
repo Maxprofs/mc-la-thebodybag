@@ -31,6 +31,7 @@ define(
 			
 			// Signals
 			_this.signals = _this.signals || {};
+			_this.signals.videoPlayed = new signals.Signal();
 
 			// View elements
 			_this.els = {};
@@ -101,13 +102,20 @@ define(
 				if(typeof _this.videoViewBox === 'undefined') {
 					_this.videoViewBox = new VideoViewBox(_this.app, $('#videosContentBlock'));
 					_this.videoViewBox.signals.deactivated.add(_onVideoViewBoxDeactivated);
+					_this.videoViewBox.signals.videoPlayed.add(_onVideoPlayed);
 					_this.videoViewBox.activate(_this.data, index);
 					_this.resize();
 				}
 			};
 
 			function _onVideoViewBoxDeactivated() {
+				_this.videoViewBox.signals.deactivated.remove(_onVideoViewBoxDeactivated);
+				_this.videoViewBox.signals.videoPlayed.remove(_onVideoPlayed);
 				_this.videoViewBox = undefined;
+			};
+
+			function _onVideoPlayed() {
+				_this.signals.videoPlayed.dispatch();
 			};
 
 /////////////

@@ -147,7 +147,7 @@ define(
 
 		    function _onContentBlocksLoaded() {
 		    	_this.contentsReady = true;
-		    	console.log('contents Loaded, lets roll!');
+		    	// console.log('Contents Loaded, lets roll!');
 
 		    	_this.splashScreen.hide();
 		    };

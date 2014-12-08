@@ -22,6 +22,7 @@ define(
             // Signals
             _this.signals = {};
             _this.signals.deactivated = new signals.Signal();
+            _this.signals.videoPlayed = new signals.Signal();
 
             // View elements
             _this.els = {};
@@ -48,7 +49,7 @@ define(
                 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
                 window.onYouTubeIframeAPIReady = function() {
-                    console.log('Youtube API is ready!');
+                    // console.log('Youtube API is ready!');
                 };
             };
 
@@ -67,18 +68,22 @@ define(
                 _updateNav();
             };
 
-            function _onPlayerStateChange() {
-                console.log('[modules/videoViewBox] - _onPlayerStateChange()');
+            function _onPlayerStateChange(newState) {
+                // 0 = FINISH
+                // 1 = PLAY
+                // 2 = PAUSE
+                // 3 = SEEK                
+                if(newState.data === 1) {
+                    _this.signals.videoPlayed.dispatch();
+                }
             };
 
             function _showVideo() {
-                console.log('[modules/videoViewBox] - _showVideo()');
                 TweenMax.set(_this.els.$wrapper, {visibility: 'visible'});
                 TweenMax.to(_this.els.$wrapper, 0.6, {opacity: 1, ease: Strong.easeOut});
             };
 
             function _hideVideo() {
-                console.log('[modules/videoViewBox] - _hideVideo()');
                 TweenMax.to(_this.els.$wrapper, 0.4, {opacity: 0, ease: Strong.easeOut, onComplete: function() {
                     TweenMax.set(_this.els.$wrapper, {visibility: 'hidden'});
                     _onVideoHidden();
@@ -101,18 +106,19 @@ define(
                         'modestbranding': 0,
                         'rel': 0,
                         'wmode': 'transparent',
-                        'frameborder': 1
+                        'frameborder': 1,
+                        'enablejsapi': 1
                     },
                     events: {
                         'onReady': _onPlayerReady,
                         'onStateChange': _onPlayerStateChange
                     }
                 });
+
+                _this.player.addEventListener('onStateChange', _onPlayerStateChange);
             };
 
             function _showNextVideo() {
-                console.log('[modules/videoViewBox] - _showNextVideo()');
-
                 if(_this.activeVideoId + 1 < _this.videoData.length) {
                     _this.activeVideoId++;
                     _swapVideos();
@@ -120,8 +126,6 @@ define(
             };
             
             function _showPrevVideo() {
-                console.log('[modules/videoViewBox] - _showPrevVideo()');
-
                 if(_this.activeVideoId - 1 >= 0) {
                     _this.activeVideoId--;
                     _swapVideos();
@@ -139,14 +143,11 @@ define(
             };
 
             function _swapVideos() {
-                console.log('[modules/videoViewBox] - _swapVideos()');
                 _updateNav();
-
                 _hideVideo();
             };
 
             function _onVideoHidden() {
-                console.log('[modules/videoViewBox] - _onVideoHidden() - remove video and load the new one!');
                 _loadVideo(_this.videoData[_this.activeVideoId].videoId);
             };
 
