@@ -32,16 +32,20 @@ define(
 
             _this.activeVideoId = 0;
 
+            _this.script = '//youtube.com/iframe_api';
+
 /////////////
 //////////////// PRIVATE METHODS
 ///
             function _init() {
-                $.getScript('//youtube.com/iframe_api', function() {                    
-                    var tag = document.createElement('script');
-                    tag.src = '//youtube.com/iframe_api';
-                    var firstScriptTag = document.getElementsByTagName('script')[0];
-                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-                });
+                $.getScript(_this.script, _onScriptLoaded);
+            };
+
+            function _onScriptLoaded() {
+                var tag = document.createElement('script');
+                tag.src = _this.script;
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
                 window.onYouTubeIframeAPIReady = function() {
                     console.log('Youtube API is ready!');
