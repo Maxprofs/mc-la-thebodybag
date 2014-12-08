@@ -33,7 +33,6 @@ define(
 ///
 			function _init() {
 				_this.els.$buttons.on('click', _onSelect);
-				_this.setSelected(0);
 			};
 
 			function _onSelect(e) {

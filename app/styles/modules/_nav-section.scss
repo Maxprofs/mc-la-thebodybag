@@ -1,0 +1,44 @@
+.nav-section {
+    @extend .nav;
+    width: 77px;
+    position: absolute;
+    left: 50%;
+    margin-left: -38px;
+
+	.nav_buttons {
+        top: 14px;
+        border: 1px solid #FFF;
+        padding: 4px 8px;
+
+        .nav_button {
+            width: 20px;
+            height: 9px;
+            float: none;
+            display: block;
+
+            &.nav_button-up {
+                @include transform(rotateZ(180deg));
+
+                .icon {
+                    background: inline-image("inline/svg/icon-arrow-down.svg");
+                }
+                .icon-active {
+                    background: inline-image("inline/svg/icon-arrow-down-active.svg");
+                }
+            }
+
+            &.nav_button-down {
+                .icon {
+                    background: inline-image("inline/svg/icon-arrow-down.svg");
+                }
+                .icon-active {
+                    background: inline-image("inline/svg/icon-arrow-down-active.svg");
+                }
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 8px;
+            }
+        }
+    }
+}

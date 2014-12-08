@@ -5,6 +5,7 @@ define(
 		'fastclick',
 		'tweenmax',
 		'modules/imagePreloader',
+		'modules/sectionNav',
 		'modules/primaryNav',
 		'modules/splashScreen',
 		'modules/contentBlocks/contentBlockGroup'
@@ -16,6 +17,7 @@ define(
 		fastclick,
 		TweenMax,
 		ImagePreloader,
+		SectionNav,
 		PrimaryNav,
 		SplashScreen,
 		ContentBlockGroup
@@ -54,13 +56,18 @@ define(
 				_this.primaryNav = new PrimaryNav(_this, $('#primaryNav'));
 				_this.primaryNav.signals.selected.add(_onPrimaryNavSelected);
 
+				_this.sectionNav = new SectionNav(_this, $('#sectionNav'));
+				_this.sectionNav.signals.upButtonSelected.add(_onSectionNavUpButtonSelected);
+				_this.sectionNav.signals.downButtonSelected.add(_onSectionNavDownButtonSelected);
+				_this.sectionNav.setTotal(_this.primaryNav.getTotal());
+
 				_this.splashScreen = new SplashScreen(_this, $('#splashScreen'));
 				_this.splashScreen.signals.hidden.add(_onSplashScreenHidden);
 
 				_this.contentBlockGroup = new ContentBlockGroup(_this, $('#contentBlockGroup'));
-				_this.contentBlockGroup.signals.heroNavbarSelected.add(_onHeroNavbarSelected);
 				_this.contentBlockGroup.signals.contentBlockActivated.add(_onContentBlockActivated);
 				_this.contentBlockGroup.signals.loaded.add(_onContentBlocksLoaded);
+				_this.contentBlockGroup.signals.heroVideoFinished.add(_onHeroVideoFinished);
 
 				_this.els.$logo.on('click', _onHeaderLogoClicked);
 
@@ -70,6 +77,9 @@ define(
 				// Handle the app resizing
 				_this.$window.on('resize', _onResized);
 				setTimeout(function() {_onResized();}, 100);
+
+				// Kick off the navigation by selecting the first primary nav item
+				_evaluateNavSelection(0);
 			};
 
 			/**
@@ -89,7 +99,12 @@ define(
 		    };
 
 		    function _onHeaderLogoClicked() {
-		    	_onHeroNavbarSelected(0);
+		    	_evaluateNavSelection(0);
+		    };
+
+		    function _onHeroVideoFinished() {
+				_this.contentBlockGroup.signals.heroVideoFinished.remove(_onHeroVideoFinished);
+		    	_evaluateNavSelection(1);
 		    };
 
 		    function _onSplashScreenHidden() {
@@ -97,12 +112,19 @@ define(
 		    	delete _this.splashScreen;
 		    };
 
-		    /*
-		     * Handle hero navbar selection
-		     */
-		    function _onHeroNavbarSelected(contentBlockId) {
+
+		    function _onSectionNavUpButtonSelected () {
+		    	_evaluateNavSelection(_this.primaryNav.getSelected() - 1);
+		    };
+
+		    function _onSectionNavDownButtonSelected () {
+		    	_evaluateNavSelection(_this.primaryNav.getSelected() + 1);
+		    };
+
+		    function _evaluateNavSelection(contentBlockId) {
 		    	_this.primaryNav.setSelected(contentBlockId);
 		    	_this.contentBlockGroup.setActiveContentBlockId(contentBlockId);
+		    	_this.sectionNav.updateButtons(contentBlockId);
 		    };
 
 		    /*
@@ -110,6 +132,7 @@ define(
 		     */
 		    function _onPrimaryNavSelected(buttonId) {
 		    	_this.contentBlockGroup.setActiveContentBlockId(buttonId);
+		    	_this.sectionNav.updateButtons(buttonId);
 		    };
 
 		    /*
@@ -118,6 +141,7 @@ define(
 		    function _onContentBlockActivated(contentBlockId) {
 		    	if(_this.primaryNav.getSelected() !== contentBlockId) {
 		    		_this.primaryNav.setSelected(contentBlockId);
+		    		_this.sectionNav.updateButtons(contentBlockId);
 		    	}
 		    };
 
@@ -133,7 +157,7 @@ define(
 		    };
 
 		    _this.enableAppScrolling = function disableAppScrolling() {
-		    	// _this.els.$body.removeClass('is-scroll-disabled');
+		    	_this.els.$body.removeClass('is-scroll-disabled');
 		    };
 
 			// Self initialising

@@ -32,7 +32,7 @@
 			// Signals
 			_this.signals = _this.signals || {};
 			_this.signals.heroResized = new signals.Signal();
-			_this.signals.navbarSelected = new signals.Signal();
+			_this.signals.videoFinished = new signals.Signal();
 
 			// View elements
 			_this.els = {};
@@ -43,9 +43,6 @@
 //////////////// PRIVATE METHODS
 ///
 			function _init() {
-				_this.els.$navbar = _this.els._$parent.find('.navbar');
-				_this.els.$navbar.on('click', _onNavbarClick);
-
 				// If the browser supports video, we initialise the player...
 				var videoEl = document.createElement('video');
 				if(typeof videoEl !== 'undefined' && videoEl.canPlayType !== 'undefined') {
@@ -91,9 +88,7 @@
 				_this.isPlaying = false;
 				_this.wasPlaying = false;
 
-				setTimeout(function(){
-					_this.els.$navbar.click();
-				}, 1000);
+				_this.signals.videoFinished.dispatch();
 
 				_stopUpdatingProgressBar();
 				TweenMax.to(_this.heroVideoEl, 1, {opacity: 0.6, ease: Expo.easeOut});
@@ -187,10 +182,6 @@
 				TweenMax.to(window, 0.5, {volume: _this.heroVideoVolume, onUpdate: function(){
 					_this.heroVideoEl.volume = window.volume;
 				}});
-			};
-
-			function _onNavbarClick(e) {
-				_this.signals.navbarSelected.dispatch();
 			};
 
 /////////////

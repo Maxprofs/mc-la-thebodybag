@@ -32,7 +32,7 @@ define(
 
 			// Signals
 			_this.signals = {};
-			_this.signals.heroNavbarSelected = new signals.Signal();
+			_this.signals.heroVideoFinished = new signals.Signal();
 			_this.signals.contentBlockActivated = new signals.Signal();
 			_this.signals.ready = new signals.Signal();
 			_this.signals.loaded = new signals.Signal();
@@ -49,8 +49,8 @@ define(
 			function _init() {
 				// Content blocks
 				_this.heroContentBlock = new HeroContentBlock(_this.app, $('#heroContentBlock'));
+				_this.heroContentBlock.signals.videoFinished.add(_onHeroVideoFinished);
 				_this.heroContentBlock.signals.loaded.add(_onContentBlockLoaded);
-				_this.heroContentBlock.signals.navbarSelected.add(_onNavbarSelected);
 				_this.contentBlocks.push(_this.heroContentBlock);
 			
 				_this.musicContentBlock = new MusicContentBlock(_this.app, $('#musicContentBlock'));
@@ -133,10 +133,10 @@ define(
 			};
 
 			/**
-		     * Handle the hero content block navbar selection signal
+		     * Handle the hero video finished playing
 		    */
-			function _onNavbarSelected() {
-				_this.signals.heroNavbarSelected.dispatch(1);
+			function _onHeroVideoFinished() {
+				_this.signals.heroVideoFinished.dispatch();
 			};
 
 			/**
