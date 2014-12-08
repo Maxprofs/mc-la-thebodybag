@@ -20,19 +20,19 @@
                 @include transform(rotateZ(180deg));
 
                 .icon {
-                    background: inline-image("inline/svg/icon-arrow-down.svg");
+                    background-image: inline-image("inline/svg/icon-arrow-down.svg");
                 }
                 .icon-active {
-                    background: inline-image("inline/svg/icon-arrow-down-active.svg");
+                    background-image: inline-image("inline/svg/icon-arrow-down-active.svg");
                 }
             }
 
             &.nav_button-down {
                 .icon {
-                    background: inline-image("inline/svg/icon-arrow-down.svg");
+                    background-image: inline-image("inline/svg/icon-arrow-down.svg");
                 }
                 .icon-active {
-                    background: inline-image("inline/svg/icon-arrow-down-active.svg");
+                    background-image: inline-image("inline/svg/icon-arrow-down-active.svg");
                 }
             }
 

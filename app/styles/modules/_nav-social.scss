@@ -22,30 +22,30 @@
 			width: 44px;
 
 			.icon {
-				background: inline-image("inline/svg/icon-social-soundcloud.svg");
+				background-image: inline-image("inline/svg/icon-social-soundcloud.svg");
 			}
 			.icon-active {
-				background: inline-image("inline/svg/icon-social-soundcloud-active.svg");
+				background-image: inline-image("inline/svg/icon-social-soundcloud-active.svg");
 			}
 		}
 		&.nav_button-youtube {
 			width: 66px;
 
 			.icon {
-				background: inline-image("inline/svg/icon-social-youtube.svg");
+				background-image: inline-image("inline/svg/icon-social-youtube.svg");
 			}
 			.icon-active {
-				background: inline-image("inline/svg/icon-social-youtube-active.svg");
+				background-image: inline-image("inline/svg/icon-social-youtube-active.svg");
 			}
 		}
 		&.nav_button-facebook {
 			width: 65px;
 
 			.icon {
-				background: inline-image("inline/svg/icon-social-facebook.svg");
+				background-image: inline-image("inline/svg/icon-social-facebook.svg");
 			}
 			.icon-active {
-				background: inline-image("inline/svg/icon-social-facebook-active.svg");
+				background-image: inline-image("inline/svg/icon-social-facebook-active.svg");
 			}
 		}
 

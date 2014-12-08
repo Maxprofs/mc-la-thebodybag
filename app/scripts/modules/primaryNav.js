@@ -33,6 +33,8 @@ define(
 ///
 			function _init() {
 				_this.els.$buttons.on('click', _onSelect);
+
+				$(window).on('keyup', _onKeyUp);
 			};
 
 			function _onSelect(e) {
@@ -44,6 +46,26 @@ define(
 
 				_this.signals.selected.dispatch(_this.selectedIndex);
 			};
+
+			function _onKeyUp(e) {
+                if(e.keyCode === 38) {
+                    _selectPreviousButton();
+                } else if(e.keyCode === 40) {
+                	_selectNextButton();
+                }
+            };
+
+            function _selectPreviousButton() {
+            	if(_this.selectedIndex - 1 >= 0) {
+            		_this.els.$buttons[_this.selectedIndex - 1].click();
+            	}
+            };
+
+            function _selectNextButton() {
+            	if(_this.selectedIndex + 1 < _this.getTotal()) {
+            		_this.els.$buttons[_this.selectedIndex + 1].click();
+            	}
+            };
 
 /////////////
 //////////////// PUBLIC METHODS

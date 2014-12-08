@@ -26,35 +26,35 @@
 
 		&.nav_button-play {
 			.icon {
-				background: inline-image("inline/svg/icon-media-play.svg");
+				background-image: inline-image("inline/svg/icon-media-play.svg");
 			}
 			.icon-active {
-				background: inline-image("inline/svg/icon-media-play-active.svg");
+				background-image: inline-image("inline/svg/icon-media-play-active.svg");
 			}
 
 			&.is-active {
 				.icon {
-					background: inline-image("inline/svg/icon-media-pause.svg");
+					background-image: inline-image("inline/svg/icon-media-pause.svg");
 				}
 				.icon-active {
-					background: inline-image("inline/svg/icon-media-pause-active.svg");
+					background-image: inline-image("inline/svg/icon-media-pause-active.svg");
 				}
 			}
 		}
 		&.nav_button-mute {
 			.icon {
-				background: inline-image("inline/svg/icon-media-sound-on.svg");
+				background-image: inline-image("inline/svg/icon-media-sound-on.svg");
 			}
 			.icon-active {
-				background: inline-image("inline/svg/icon-media-sound-on-active.svg");
+				background-image: inline-image("inline/svg/icon-media-sound-on-active.svg");
 			}
 
 			&.is-active {
 				.icon {
-					background: inline-image("inline/svg/icon-media-sound-off.svg");
+					background-image: inline-image("inline/svg/icon-media-sound-off.svg");
 				}
 				.icon-active {
-					background: inline-image("inline/svg/icon-media-sound-off-active.svg");
+					background-image: inline-image("inline/svg/icon-media-sound-off-active.svg");
 				}
 			}
 		}

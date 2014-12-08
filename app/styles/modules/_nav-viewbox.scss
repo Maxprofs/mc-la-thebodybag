@@ -13,26 +13,26 @@
 
             &.nav_button-close {
                 .icon {
-                    background: inline-image("inline/svg/icon-close.svg");
+                    background-image: inline-image("inline/svg/icon-close.svg");
                 }
                 .icon-active {
-                    background: inline-image("inline/svg/icon-close-active.svg");
+                    background-image: inline-image("inline/svg/icon-close-active.svg");
                 }
             }
             &.nav_button-prev {
                 .icon {
-                    background: inline-image("inline/svg/icon-arrow-left.svg");
+                    background-image: inline-image("inline/svg/icon-arrow-left.svg");
                 }
                 .icon-active {
-                    background: inline-image("inline/svg/icon-arrow-left-active.svg");
+                    background-image: inline-image("inline/svg/icon-arrow-left-active.svg");
                 }
             }
             &.nav_button-next {
                 .icon {
-                    background: inline-image("inline/svg/icon-arrow-right.svg");
+                    background-image: inline-image("inline/svg/icon-arrow-right.svg");
                 }
                 .icon-active {
-                    background: inline-image("inline/svg/icon-arrow-right-active.svg");
+                    background-image: inline-image("inline/svg/icon-arrow-right-active.svg");
                 }
             }
 
