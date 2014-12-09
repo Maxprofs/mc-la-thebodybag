@@ -39,10 +39,22 @@
 			_this.els._$parent = el;
 			_this.els.$mash = _this.els._$parent.find('.content_mash');
 
+			_this.images = [
+				'images/logo-hero.png'
+			];
+
 /////////////
 //////////////// PRIVATE METHODS
 ///
 			function _init() {
+				_preloadImages();
+			};
+
+			function _preloadImages() {
+				_this.app.imagePreloader.preload(_this.images, function() {_onImagesPreloaded();});
+			};
+
+			function _onImagesPreloaded () {			
 				// If the browser supports video, we initialise the player...
 				var videoEl = document.createElement('video');
 				if(typeof videoEl !== 'undefined' && videoEl.canPlayType !== 'undefined') {
@@ -52,6 +64,12 @@
 
 			function _initVideo() {
 				$(_this.videoHTMLContent).insertAfter(_this.els.$mash);
+
+				_this.els.$logo = _this.els._$parent.find('.video_logo');
+				_this.els.$logo.css({
+					'background-image': 'url(' + _this.images[0] + ')',
+					opacity: 0
+				});
 
 				_this.els.$video = _this.els._$parent.find('.video-hero');
 				_this.els.$playButton = _this.els._$parent.find('.nav_button-play');
@@ -153,18 +171,22 @@
 			};
 
 			function _onPlayButtonClick(e) {
+				_this.resize();
+				
 				if(_this.heroVideoEl.paused) {
 					$(this).addClass('is-active');
 					_this.heroVideoEl.play();
 					_this.isPlaying = true;
 					_startUpdatingProgressBar();
 					TweenMax.to(_this.heroVideoEl, 1, {opacity: 1, ease: Expo.easeOut});
+					TweenMax.to(_this.els.$logo, 0.3, {scale: 0.9, opacity: 0, ease: Expo.easeOut});
 				} else {
 					$(this).removeClass('is-active');
 					_this.heroVideoEl.pause();
 					_this.isPlaying = false;
 					_stopUpdatingProgressBar();
 					TweenMax.to(_this.heroVideoEl, 1, {opacity: 0.6, ease: Expo.easeOut});
+					TweenMax.to(_this.els.$logo, 0.2, {delay: 0.1, scale: 1, opacity: 1, ease: Back.easeOut});
 				}
 			};
 
@@ -219,6 +241,11 @@
 
 				_this.els._$parent.css({
 					height: winHeight + 'px'
+				});
+
+				_this.els.$logo.css({
+					left: Math.floor(0.5 * (winWidth - _this.els.$logo.width())) + 'px',
+					top: Math.floor(0.5 * (winHeight - _this.els.$logo.height())) + 'px'
 				});
 
 				_this.els.$mash.css({

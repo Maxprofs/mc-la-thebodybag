@@ -104,3 +104,13 @@
     background: $color-header-background;
     z-index: 9000;
 }
+
+.video_logo {
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    background-size: cover;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}

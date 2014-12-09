@@ -103,7 +103,7 @@ define(
 					_this.photosContentBlock.load();
 					_setPreloadingMessage(_this.photosContentBlock);
 				} else if(contentBlock === _this.photosContentBlock) {
-					_this.signals.loaded.dispatch('Kész vagyok!');
+					_this.signals.loaded.dispatch('Kész vagyok haver!');
 				}
 			};
 
