@@ -1,7 +1,7 @@
 .thumbnails {
     display: inline-block;
     @include clearfix;
-    user-select: none;
+    @extend .is-selection-disabled;
 }
 
 .thumbnail {

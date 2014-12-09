@@ -1,5 +1,6 @@
 .nav {	
 	display: inline-block;
+	@extend .is-selection-disabled;
 
 	.nav_buttons {
 		margin: 0;

@@ -1,6 +1,7 @@
 .contentgroup {
 	top: $header-height;
 	padding-bottom: $footer-height;
+	@extend .is-selection-disabled;
 }
 .content {
 	min-height: 200px;

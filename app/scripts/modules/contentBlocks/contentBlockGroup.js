@@ -94,8 +94,6 @@ define(
 		     * Handle the app resized signal
 		    */
 			function _onResized() {
-				console.log('[modules/contentBlocks/contentBlockGroup] - _onResized()');
-
 				// Resizing all .content blocks
 				_this.els.$contents.css({
 					height: window.innerHeight - _this.app.els.$appHeader.height() - _this.app.els.$appFooter.height() + 'px'
@@ -116,7 +114,6 @@ define(
 		     * Handle the app scrolled signal
 		    */
 			function _onScrolled() {
-				console.log('[modules/contentBlocks/contentBlockGroup] - _onScrolled()');
 				if(!_this.scrollingContent) {
 		        	// Handling the user scrolling
 			        var scrollDirection;
@@ -153,7 +150,6 @@ define(
 		     * @return {[type]}           [description]
 		    */
 		    function _scrollTo(positionY) {
-		    	console.log('[modules/contentBlocks/contentBlockGroup] - _scrollTo() - positionY: ', positionY);
 		        _this.scrollingContent = true;
 		        window.sp = _this.$window.scrollTop();
 		        TweenMax.to(window, 0.6, {sp: positionY, ease: Quart.easeInOut, onUpdate: function(){

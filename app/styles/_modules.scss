@@ -1,3 +1,7 @@
+.is-selection-disabled {
+    user-select: none;
+}
+
 .is-scroll-disabled {
     overflow: hidden;
 }
@@ -24,7 +28,7 @@
 	z-index: 2000;
 	position: fixed;
 	@include clearfix;
-	user-select: none;
+	@extend .is-selection-disabled;
 }
 .logo-header {
 	position: relative;
@@ -50,7 +54,7 @@
 	background-image: inline-image("inline/noise.png");
 	background-color: $color-header-background;
 	z-index: 3000;
-	user-select: none;
+	@extend .is-selection-disabled;
 }
 .footer_voomad {
 	display: inline-block;

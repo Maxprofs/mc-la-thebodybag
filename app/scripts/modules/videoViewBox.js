@@ -33,7 +33,7 @@ define(
 
             _this.activeVideoId = 0;
 
-            _this.script = '//youtube.com/iframe_api';
+            _this.script = 'http://youtube.com/iframe_api';
 
 /////////////
 //////////////// PRIVATE METHODS
@@ -49,7 +49,7 @@ define(
                 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
                 window.onYouTubeIframeAPIReady = function() {
-                    // console.log('Youtube API is ready!');
+                    console.log('Youtube API is ready!');
                 };
             };
 
@@ -107,7 +107,8 @@ define(
                         'rel': 0,
                         'wmode': 'transparent',
                         'frameborder': 1,
-                        'enablejsapi': 1
+                        'enablejsapi': 1,
+                        'html5': 1
                     },
                     events: {
                         'onReady': _onPlayerReady,

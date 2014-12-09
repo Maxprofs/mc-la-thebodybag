@@ -44,7 +44,7 @@ define(
 				'images/background-music.jpg'
 			];
 
-			_this.script = '//w.soundcloud.com/player/api.js';
+			_this.script = 'http://w.soundcloud.com/player/api.js';
 
 /////////////
 //////////////// PRIVATE METHODS
