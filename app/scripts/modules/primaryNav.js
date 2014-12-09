@@ -83,7 +83,8 @@ define(
 			};
 
 			_this.enableKeys = function enableKeys() {
-				$(window).on('keyup', _onKeyUp);
+				_this.disableKeys();
+                $(window).on('keyup', _onKeyUp);
 			};
 
 			_this.disableKeys = function disableKeys() {
