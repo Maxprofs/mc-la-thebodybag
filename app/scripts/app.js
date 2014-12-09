@@ -80,6 +80,7 @@ define(
 
 				// Kick off the navigation by selecting the first primary nav item
 				_evaluateNavSelection(0);
+				_this.primaryNav.enableKeys();
 			};
 
 			/**
@@ -154,10 +155,12 @@ define(
 
 		    _this.disableAppScrolling = function disableAppScrolling() {
 		    	_this.els.$body.addClass('is-scroll-disabled');
+		    	_this.primaryNav.disableKeys();
 		    };
 
 		    _this.enableAppScrolling = function disableAppScrolling() {
 		    	_this.els.$body.removeClass('is-scroll-disabled');
+		    	_this.primaryNav.enableKeys();
 		    };
 
 			// Self initialising

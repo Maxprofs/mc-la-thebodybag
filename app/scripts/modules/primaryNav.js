@@ -33,8 +33,6 @@ define(
 ///
 			function _init() {
 				_this.els.$buttons.on('click', _onSelect);
-
-				$(window).on('keyup', _onKeyUp);
 			};
 
 			function _onSelect(e) {
@@ -82,6 +80,14 @@ define(
 
 			_this.getTotal = function getTotal() {
 				return _this.els.$buttons.length;
+			};
+
+			_this.enableKeys = function enableKeys() {
+				$(window).on('keyup', _onKeyUp);
+			};
+
+			_this.disableKeys = function disableKeys() {
+				$(window).off('keyup', _onKeyUp);
 			};
 
 			$(_init());
