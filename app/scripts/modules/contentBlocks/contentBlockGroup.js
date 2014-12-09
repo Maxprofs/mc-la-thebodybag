@@ -34,6 +34,7 @@ define(
 			_this.signals = {};
 			_this.signals.heroVideoFinished = new signals.Signal();
 			_this.signals.contentBlockActivated = new signals.Signal();
+			_this.signals.contentBlockLoadStarted = new signals.Signal();
 			_this.signals.ready = new signals.Signal();
 			_this.signals.loaded = new signals.Signal();
 
@@ -75,18 +76,34 @@ define(
 				});
 
 				// Start preloading the contents
+				_setPreloadingMessage(_this.heroContentBlock);
 				_this.heroContentBlock.load();
+			};
+
+			function _setPreloadingMessage(contentBlock) {
+				if(contentBlock === _this.heroContentBlock) {
+					_this.signals.contentBlockLoadStarted.dispatch('Hozom az intrót');
+				} else if(contentBlock === _this.musicContentBlock) {
+					_this.signals.contentBlockLoadStarted.dispatch('Rakom az ütemeket');
+				} else if(contentBlock === _this.videosContentBlock) {
+					_this.signals.contentBlockLoadStarted.dispatch('Vágom a videókat');
+				} else if(contentBlock === _this.photosContentBlock) {
+					_this.signals.contentBlockLoadStarted.dispatch('Lövöm a képeket');
+				}
 			};
 
 			function _onContentBlockLoaded(contentBlock) {
 				if(contentBlock === _this.heroContentBlock) {
 					_this.musicContentBlock.load();
+					_setPreloadingMessage(_this.musicContentBlock);
 				} else if(contentBlock === _this.musicContentBlock) {
 					_this.videosContentBlock.load();
+					_setPreloadingMessage(_this.videosContentBlock);
 				} else if(contentBlock === _this.videosContentBlock) {
 					_this.photosContentBlock.load();
+					_setPreloadingMessage(_this.photosContentBlock);
 				} else if(contentBlock === _this.photosContentBlock) {
-					_this.signals.loaded.dispatch();
+					_this.signals.loaded.dispatch('Kész vagyok!');
 				}
 			};
 

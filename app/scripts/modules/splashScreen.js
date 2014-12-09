@@ -2,13 +2,15 @@ define(
     [
         'jquery',
         'signals',
-        'tweenmax'
+        'tweenmax',
+        'modules/preloader'
     ],
 
     function(
         $,
         signals,
-        TweenMax
+        TweenMax,
+        Preloader
     ) {
 
         'use strict';
@@ -31,22 +33,40 @@ define(
 ///
             function _init() {
                 _this.app.disableAppScrolling();
+
+                _this.preloader = new Preloader(_this.app, $('#splashScreen'));
+                _this.preloader.signals.hidden.add(_onPreloaderHidden);
+                _this.preloader.show();
+
+                _this.app.signals.appResized.add(_onResized);
             };
 
-/////////////
-//////////////// PUBLIC METHODS
-///
-            _this.resize = function resize() {
-
-            };
-
-            _this.hide = function hide() {
+            function _hide() {
                 TweenMax.to(_this.els._$parent, 2.1, {opacity: 0, onComplete: function() {
                     _this.els._$parent.remove();
                     _this.signals.hidden.dispatch();
 
                     _this.app.enableAppScrolling();
                 }});
+            }
+
+            function _onPreloaderHidden() {
+                _hide();
+            };
+
+            function _onResized() {
+                _this.preloader.resize();
+            };
+
+/////////////
+//////////////// PUBLIC METHODS
+///
+            _this.hide = function hide(delay) {
+                _this.preloader.hide(delay);
+            };
+
+            _this.setMessage = function setMessage(message) {
+                _this.preloader.setMessage(message);
             };
 
             $(_init());

@@ -1,0 +1,15 @@
+.preloader {
+    min-width: 180px;
+    display: inline-block;
+    position: absolute;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 80%;
+    @extend .is-selection-disabled;
+
+    .preloader_strike {
+        width: 100%;
+        border-bottom: 1px solid $color-link-active;
+        margin: 12px auto;
+    }
+}

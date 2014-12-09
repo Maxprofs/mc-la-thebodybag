@@ -65,8 +65,9 @@ define(
 				_this.splashScreen.signals.hidden.add(_onSplashScreenHidden);
 
 				_this.contentBlockGroup = new ContentBlockGroup(_this, $('#contentBlockGroup'));
-				_this.contentBlockGroup.signals.contentBlockActivated.add(_onContentBlockActivated);
+				_this.contentBlockGroup.signals.contentBlockLoadStarted.add(_onContentBlockLoadStarted);
 				_this.contentBlockGroup.signals.loaded.add(_onContentBlocksLoaded);
+				_this.contentBlockGroup.signals.contentBlockActivated.add(_onContentBlockActivated);
 				_this.contentBlockGroup.signals.heroVideoFinished.add(_onHeroVideoFinished);
 
 				_this.els.$logo.on('click', _onHeaderLogoClicked);
@@ -146,11 +147,14 @@ define(
 		    	}
 		    };
 
-		    function _onContentBlocksLoaded() {
-		    	_this.contentsReady = true;
-		    	// console.log('Contents Loaded, lets roll!');
+		    function _onContentBlockLoadStarted(message) {
+		    	_this.splashScreen.setMessage(message);
+		    };
 
-		    	_this.splashScreen.hide();
+		    function _onContentBlocksLoaded(message) {
+		    	_this.contentsReady = true;
+		    	_this.splashScreen.setMessage(message);
+		    	_this.splashScreen.hide(3);
 		    };
 
 		    _this.disableAppScrolling = function disableAppScrolling() {

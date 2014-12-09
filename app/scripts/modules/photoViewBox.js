@@ -126,7 +126,6 @@ define(
 
             function _onPhotoLoaded(index) {
                 _this.loadedPhotos ++;
-                console.log('[modules/PhotoViewBox] _onPhotoLoaded() - Photo loaded: ', index, _this.loadedPhotos);
                 if(_this.loadedPhotos === _this.photos.length - 1) {
                     _this.activePhotoId = 0;
                     _this.photos[_this.activePhotoId].show();
