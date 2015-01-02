@@ -3,14 +3,16 @@ define(
         'jquery',
         'signals',
         'tweenmax',
-        'text!templates/video-viewbox.html'
+        'text!templates/video-viewbox.html',
+        'modules/preloader'
     ],
 
     function(
         $,
         signals,
         TweenMax,
-        content
+        content,
+        Preloader
     ) {
 
         'use strict';
@@ -42,6 +44,13 @@ define(
                 $.getScript(_this.script, _onScriptLoaded);
             };
 
+            function _addPreloader(el) {
+                _this.preloader = new Preloader(_this.app, el);
+                _this.preloader.signals.hidden.add(_onPreloaderHidden);
+                _this.preloader.setMessage('Jön a videó');
+                _this.preloader.show();
+            }
+
             function _onScriptLoaded() {
                 var tag = document.createElement('script');
                 tag.src = _this.script;
@@ -49,7 +58,7 @@ define(
                 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
                 window.onYouTubeIframeAPIReady = function() {
-                    console.log('Youtube API is ready!');
+                    // console.log('Youtube API is ready!');
                 };
             };
 
@@ -63,10 +72,15 @@ define(
             };
 
             function _onPlayerReady() {
-                console.log('[modules/videoViewBox] - _onPlayerReady()');
+                // console.log('[modules/videoViewBox] - _onPlayerReady()');
+                _this.preloader.setMessage('Meg is vagyunk!');
+                _this.preloader.hide(1);
+            };
+
+            function _onPreloaderHidden() {
                 _showVideo();
                 _updateNav();
-            };
+            }
 
             function _onPlayerStateChange(newState) {
                 // 0 = FINISH
@@ -91,10 +105,12 @@ define(
             };
 
             function _loadVideo(videoId) {
-                console.log('[modules/videoViewBox] - _loadVideo() - videoId: ', videoId);
+                // console.log('[modules/videoViewBox] - _loadVideo() - videoId: ', videoId);
                 if(typeof _this.player !== 'undefined') {
                     _this.player.destroy();
                 }
+
+                _addPreloader(_this.els.$viewboxWrapper);
 
                 _this.player = new YT.Player(_this.els.$container[0], {
                     width: '854',

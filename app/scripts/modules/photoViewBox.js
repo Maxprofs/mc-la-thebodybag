@@ -46,7 +46,6 @@ define(
                 _this.preloader = new Preloader(_this.app, el);
                 _this.preloader.signals.hidden.add(_onPreloaderHidden);
                 _this.preloader.setMessage('Jönnek a fótok');
-                _this.preloader.show();
             }
 
             function _onDeactivateComplete() {
@@ -199,6 +198,7 @@ define(
 
                 TweenMax.set(_this.els.$viewbox, {width: 0});
                 TweenMax.to(_this.els.$viewbox, 1.5, {width: '100%', ease: Expo.easeInOut, onComplete: function(){
+                        _this.preloader.show();
                         _loadPhotos();
                 }});
 

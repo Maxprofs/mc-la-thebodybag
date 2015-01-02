@@ -32,6 +32,9 @@ define(
 ///
 
             function _init() {
+                if(_this.els._$parent.find('.preloader').length > 0) {
+                    _this.els._$parent.find('.preloader').remove();
+                }
                 _this.els._$parent.append($(content));
                 _this.els.$preloader = _this.els._$parent.find('.preloader');
                 _this.els.$preloader.css({
