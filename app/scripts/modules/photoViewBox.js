@@ -4,7 +4,8 @@ define(
         'signals',
         'tweenmax',
         'text!templates/photo-viewbox.html',
-        'modules/photo'
+        'modules/photo',
+        'modules/preloader'
     ],
 
     function(
@@ -12,7 +13,8 @@ define(
         signals,
         TweenMax,
         content,
-        Photo
+        Photo,
+        Preloader
     ) {
 
         'use strict';
@@ -38,8 +40,14 @@ define(
 //////////////// PRIVATE METHODS
 ///
             function _init() {
-                
             };
+
+            function _addPreloader(el) {
+                _this.preloader = new Preloader(_this.app, el);
+                _this.preloader.signals.hidden.add(_onPreloaderHidden);
+                _this.preloader.setMessage('Jönnek a fótok');
+                _this.preloader.show();
+            }
 
             function _onDeactivateComplete() {
                 _this.els.$viewbox.remove();
@@ -128,10 +136,8 @@ define(
                 _this.loadedPhotos ++;
                 if(_this.loadedPhotos === _this.photos.length - 1) {
                     _this.activePhotoId = 0;
-                    _this.photos[_this.activePhotoId].show();
-                    _updateNav();
-                    _updateProgressBar();
-                    $(window).on('keyup', _onKeyUp);
+                    _this.preloader.setMessage('Mind lejött!');
+                    _this.preloader.hide(0.5);
                 }
             };
             function _onPhotoShown(index) {
@@ -139,6 +145,13 @@ define(
                     _this.photos[index].hide();
                 }
             };
+
+            function _onPreloaderHidden() {
+                _this.photos[_this.activePhotoId].show();
+                _updateNav();
+                _updateProgressBar();
+                $(window).on('keyup', _onKeyUp);
+            }
 
 /////////////
 //////////////// PUBLIC METHODS
@@ -166,7 +179,6 @@ define(
                     opacity: 0,
                     visibility: 'hidden'
                 });
-                _this.els.$container = _this.els.$wrapper.find('.videoembed');
                 _this.els.$logo = _this.els.$viewbox.find('.logo-header');
 
                 _this.els.$closeButton = _this.els.$viewbox.find('.nav_button-close');
@@ -182,6 +194,8 @@ define(
                 _this.els.$progressBarTotal = _this.els.$viewbox.find('.progressbar-total');
 
                 _this.photoData = photoData;
+
+                _addPreloader(_this.els.$viewboxWrapper);
 
                 TweenMax.set(_this.els.$viewbox, {width: 0});
                 TweenMax.to(_this.els.$viewbox, 1.5, {width: '100%', ease: Expo.easeInOut, onComplete: function(){
