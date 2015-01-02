@@ -154,7 +154,8 @@ define(
 		    function _onContentBlocksLoaded(message) {
 		    	_this.contentsReady = true;
 		    	_this.splashScreen.setMessage(message);
-		    	_this.splashScreen.hide(3);
+		    	_this.splashScreen.hide(2);
+		    	setTimeout(_this.contentBlockGroup.activate, 1000);
 		    };
 
 		    _this.disableAppScrolling = function disableAppScrolling() {

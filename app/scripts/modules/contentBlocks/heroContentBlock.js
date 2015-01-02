@@ -98,6 +98,10 @@
 
 				_this.els.$playButton.on('click', _onPlayButtonClick);
 				_this.els.$muteButton.on('click', _onMuteButtonClick);
+
+				_this.els.$video.on('click', function() {
+					_this.els.$playButton.click();
+				});
 			}
 
 			function _onVideoFinished(e) {
@@ -119,7 +123,6 @@
 				_this.resize();
 
 				_bruteMuteVideo();
-				_this.els.$playButton.click();
 
 				_this.signals.loaded.dispatch(_this);
 			};
@@ -171,6 +174,9 @@
 			};
 
 			function _onPlayButtonClick(e) {
+				e.preventDefault();
+				e.stopPropagation();
+
 				_this.resize();
 				
 				if(_this.heroVideoEl.paused) {
@@ -210,50 +216,52 @@
 //////////////// PUBLIC METHODS
 ///
 			_this.resize = function resize() {
-				var headerHeight = _this.app.els.$appHeader.height();
-				var footerHeight = _this.app.els.$appFooter.height();
-				var videoOriginalWidth = 854;
-				var videoOriginalHeight = 480;
-				var videoRatio = videoOriginalWidth/videoOriginalHeight;
-				var winWidth = window.innerWidth;
-				var winHeight = window.innerHeight - headerHeight - footerHeight;
-				var videoWidth = 0;
-				var videoHeight = 0;
-				var videoDimensionMultiplier = 1.1;
+				if (typeof _this.els.$video !== 'undefined') {
+					var headerHeight = _this.app.els.$appHeader.height();
+					var footerHeight = _this.app.els.$appFooter.height();
+					var videoOriginalWidth = 854;
+					var videoOriginalHeight = 480;
+					var videoRatio = videoOriginalWidth/videoOriginalHeight;
+					var winWidth = window.innerWidth;
+					var winHeight = window.innerHeight - headerHeight - footerHeight;
+					var videoWidth = 0;
+					var videoHeight = 0;
+					var videoDimensionMultiplier = 1.1;
 
-				// Calculate the video dimensions based on the window dimensions
-				videoWidth = Math.ceil(winWidth);
-				videoHeight = Math.ceil(videoWidth / videoRatio);
-				if(winWidth / winHeight < videoRatio) {
-					videoHeight = Math.ceil(winHeight);
-					videoWidth = Math.ceil(videoHeight * videoRatio);
+					// Calculate the video dimensions based on the window dimensions
+					videoWidth = Math.ceil(winWidth);
+					videoHeight = Math.ceil(videoWidth / videoRatio);
+					if(winWidth / winHeight < videoRatio) {
+						videoHeight = Math.ceil(winHeight);
+						videoWidth = Math.ceil(videoHeight * videoRatio);
+					}
+
+					// Apply calculated dimensions with multiplied value
+					videoWidth *= videoDimensionMultiplier;
+					videoHeight *= videoDimensionMultiplier;
+					_this.els.$video.css({
+						width: 	videoWidth + 'px',
+						height: videoHeight + 'px',
+						left: 0.5 * (winWidth - videoWidth) + 'px',
+						top: Math.floor(winHeight * 0.5 - videoHeight * 0.5) + 'px'
+					});
+
+					_this.els._$parent.css({
+						height: winHeight + 'px'
+					});
+
+					_this.els.$logo.css({
+						left: Math.floor(0.5 * (winWidth - _this.els.$logo.width())) + 'px',
+						top: Math.floor(0.5 * (winHeight - _this.els.$logo.height())) + 'px'
+					});
+
+					_this.els.$mash.css({
+						height: winHeight + 'px'
+					});
+
+					//Send signal of being resized
+					_this.signals.heroResized.dispatch();
 				}
-
-				// Apply calculated dimensions with multiplied value
-				videoWidth *= videoDimensionMultiplier;
-				videoHeight *= videoDimensionMultiplier;
-				_this.els.$video.css({
-					width: 	videoWidth + 'px',
-					height: videoHeight + 'px',
-					left: 0.5 * (winWidth - videoWidth) + 'px',
-					top: Math.floor(winHeight * 0.5 - videoHeight * 0.5) + 'px'
-				});
-
-				_this.els._$parent.css({
-					height: winHeight + 'px'
-				});
-
-				_this.els.$logo.css({
-					left: Math.floor(0.5 * (winWidth - _this.els.$logo.width())) + 'px',
-					top: Math.floor(0.5 * (winHeight - _this.els.$logo.height())) + 'px'
-				});
-
-				_this.els.$mash.css({
-					height: winHeight + 'px'
-				});
-
-				//Send signal of being resized
-				_this.signals.heroResized.dispatch();
 			};
 
 			_this.getHeight = function getHeight() {
@@ -265,6 +273,12 @@
 					_this.els.$playButton.click();
 				} else {
 					_this.wasPlaying = false;
+				}
+			};
+
+			_this.play = function play() {
+				if(!_this.isPlaying) {
+					_this.els.$playButton.click();
 				}
 			};
 

@@ -28,6 +28,7 @@
 	z-index: 2;
 	background-color: rgba(0, 0, 0, 0.1);
 	@include retina-image("../images/inline/stripe", 3px 3px);
+	pointer-events: none;
 }
 
 .content_background {

@@ -21,7 +21,7 @@ define(
 
 		'use strict';
 
-		function PrimaryNav(app, el) {
+		function ContentBlockGroup(app, el) {
 			var _this = this;
 			_this.app = app;
 
@@ -221,9 +221,13 @@ define(
 				}
 			};
 
+			_this.activate = function activate() {
+				_this.heroContentBlock.play();
+			}
+
 			$(_init());
 		}
 
-		return PrimaryNav;
+		return ContentBlockGroup;
 	}
 );
