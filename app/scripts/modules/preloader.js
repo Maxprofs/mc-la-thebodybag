@@ -32,14 +32,14 @@ define(
 ///
 
             function _init() {
-                _this.els._$parent.html($(content));
+                _this.els._$parent.append($(content));
                 _this.els.$preloader = _this.els._$parent.find('.preloader');
                 _this.els.$preloader.css({
                     opacity: 0
                 })
 
-                _this.els.$title = _this.els.$preloader.find('.preloader_title');
-                _this.els.$message = _this.els.$preloader.find('.preloader_message');
+                _this.els.$title = _this.els.$preloader.find('.preloader_title .text');
+                _this.els.$message = _this.els.$preloader.find('.preloader_message .text');
 
                 _this.setTitle('Betöltés folyamatban');
                 _this.resize();
@@ -71,6 +71,8 @@ define(
             };
 
             _this.setMessage = function setMessage(message) {
+                TweenMax.killTweensOf(_this.els.$message);
+                
                 TweenMax.to(_this.els.$message, 0.2, {opacity: 0, y: -10, ease: Strong.easeOut, onComplete: function(){
                     _this.els.$message.text(message);
                     TweenMax.to(_this.els.$message, 0.3, {opacity: 1, y: 0, ease: Back.easeOut});

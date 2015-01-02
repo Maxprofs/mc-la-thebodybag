@@ -6,10 +6,39 @@
     text-transform: uppercase;
     font-size: 80%;
     @extend .is-selection-disabled;
+    z-index: 1000;
+
+    .wrapper {
+        width: 100%;
+        height: 40px;
+        overflow: hidden;
+    }
+
+    .text {
+        position: absolute;
+        width: 100%;
+    }
+
+    .preloader_title {
+        .wrapper {
+        }
+        .text {
+            bottom: 0;
+        }
+    }
+
+    .preloader_message {
+        .wrapper {
+        }
+        .text {
+            top: 3px;
+        }
+    }
+
 
     .preloader_strike {
         width: 100%;
         border-bottom: 1px solid $color-link-active;
-        margin: 12px auto;
+        margin: 6px auto;
     }
 }
