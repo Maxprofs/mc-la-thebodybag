@@ -78,6 +78,7 @@ define(
             };
 
             function _onPreloaderHidden() {
+                _this.preloader.destroy();
                 _showVideo();
                 _updateNav();
             }

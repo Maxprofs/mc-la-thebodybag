@@ -8,6 +8,9 @@
     @extend .is-selection-disabled;
     z-index: 1000;
 
+    @include user-select(none);
+    cursor: default;
+
     .wrapper {
         width: 100%;
         height: 40px;

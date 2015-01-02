@@ -52,6 +52,11 @@ define(
 //////////////// PUBLIC METHODS
 ///
 
+            _this.destroy = function destroy() {
+                TweenMax.killTweensOf(_this.els.$message);
+                _this.els.$preloader.remove();
+            }
+
             _this.resize = function resize() {
                 _this.els.$preloader.css({
                     top: Math.round(_this.els._$parent.height() * 0.5 - _this.els.$preloader.height() * 0.5) + 'px',

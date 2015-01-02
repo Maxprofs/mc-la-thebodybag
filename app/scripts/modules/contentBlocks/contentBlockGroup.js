@@ -41,6 +41,7 @@ define(
 			_this.$window = $(window);
 			_this.activeContentBlockId = 0;
 			_this.scrollingContent = false;
+			_this.totalScrollDuration = 1.2;
 
 			_this.contentBlocks = [];
 
@@ -169,7 +170,10 @@ define(
 		    function _scrollTo(positionY) {
 		        _this.scrollingContent = true;
 		        window.sp = _this.$window.scrollTop();
-		        TweenMax.to(window, 0.6, {sp: positionY, ease: Quart.easeInOut, onUpdate: function(){
+		        var maxScrollPosY = _getContentBlockPosY(_this.els.$contents.length - 1);
+		        var scrollDistance = Math.abs(_this.$window.scrollTop() - positionY);
+		        var scrollDuration = scrollDistance / maxScrollPosY > 0 ? _this.totalScrollDuration *scrollDistance / maxScrollPosY : 0;
+		        TweenMax.to(window, scrollDuration, {sp: positionY, ease: Quart.easeInOut, onUpdate: function(){
 		            window.scrollTo(0, window.sp);
 		        }, onComplete: function(){
 		        	_this.scrollingContent = false;

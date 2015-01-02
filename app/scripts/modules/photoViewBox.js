@@ -146,6 +146,7 @@ define(
             };
 
             function _onPreloaderHidden() {
+                _this.preloader.destroy();
                 _this.photos[_this.activePhotoId].show();
                 _updateNav();
                 _updateProgressBar();

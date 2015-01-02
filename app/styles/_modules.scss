@@ -115,3 +115,18 @@
     z-index: 1;
     pointer-events: none;
 }
+
+
+.splash,
+.header,
+.footer,
+.contentgroup {
+    min-width: $min-site-width;
+    overflow-x: hidden;
+}
+
+@media screen and (max-width: $min-site-width) {
+    html, body {
+        overflow: hidden;
+    }
+}
