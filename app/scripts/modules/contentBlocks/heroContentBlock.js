@@ -114,10 +114,10 @@
 
 				_stopUpdatingProgressBar();
 				TweenMax.to(_this.heroVideoEl, 1, {opacity: 0.6, ease: Expo.easeOut});
+				TweenMax.to(_this.els.$logo, 0.2, {delay: 0.1, scale: 1, opacity: 1, ease: Back.easeOut});
 			};
 
 			function _onVideoMetadataLoaded() {
-				// console.log('[modules/contentBlocks/heroContentBlock] - _onVideoMetadataLoaded: ', _this.heroVideoEl.duration);
 				_this.heroVideoDuration = _this.heroVideoEl.duration;
 				_startUpdatingProgressBar();
 				_this.resize();
@@ -128,7 +128,6 @@
 			};
 
 			function _onVideoCanPlay() {
-				// console.log('[modules/contentBlocks/heroContentBlock] - _onVideoCanPlay');
 				_this.heroVideoEl.removeEventListener("canplay", _onVideoCanPlay);
 			};
 
