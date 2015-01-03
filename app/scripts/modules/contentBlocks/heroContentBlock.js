@@ -27,6 +27,8 @@
 			var _this = this;
 			_this.app = app;
 
+			var Helpr = window.Helpr;
+
 			_this.videoHTMLContent = videoContent;
 			
 			// Signals
@@ -39,8 +41,11 @@
 			_this.els._$parent = el;
 			_this.els.$mash = _this.els._$parent.find('.content_mash');
 
+			_this.videoMode = false;
+
 			_this.images = [
-				'images/logo-hero.png'
+				'images/logo-hero.png',
+				'images/background-hero.jpg'
 			];
 
 /////////////
@@ -51,16 +56,44 @@
 			};
 
 			function _preloadImages() {
-				_this.app.imagePreloader.preload(_this.images, function() {_onImagesPreloaded();});
+				var images = _this.images;
+				if(!Helpr.supportsTouch()) {
+					images = [_this.images[0]];
+					_this.videoMode = true;
+				}
+
+				_this.app.imagePreloader.preload(images, function() {
+					_onImagesPreloaded();
+				});
 			};
 
-			function _onImagesPreloaded () {			
-				// If the browser supports video, we initialise the player...
-				var videoEl = document.createElement('video');
-				if(typeof videoEl !== 'undefined' && videoEl.canPlayType !== 'undefined') {
-					_initVideo();
+			function _onImagesPreloaded () {
+				if(!Helpr.supportsTouch()) {
+					// If the browser supports video, we initialise the player...
+					var videoEl = document.createElement('video');
+					if(typeof videoEl !== 'undefined' && videoEl.canPlayType !== 'undefined') {
+						_initVideo();
+					}
+				} else {
+					_initFallbackContent();
 				}
 			};
+
+			function _initFallbackContent() {
+				_this.els.$contentsBackground = $('<div class="content_background"></div>');
+				_this.els._$parent.append(_this.els.$contentsBackground);
+				_this.els.$contentsBackground.css({
+					'background-image': 'url(' + _this.images[1] + ')'
+				});
+
+				_this.els.$logo = $('<div class="video_logo"></div>');
+				_this.els._$parent.append(_this.els.$logo);
+				_this.els.$logo.css({
+					'background-image': 'url(' + _this.images[0] + ')'
+				});
+
+				_this.signals.loaded.dispatch(_this);
+			}
 
 			function _initVideo() {
 				$(_this.videoHTMLContent).insertAfter(_this.els.$mash);
@@ -215,14 +248,28 @@
 //////////////// PUBLIC METHODS
 ///
 			_this.resize = function resize() {
+				var headerHeight = _this.app.els.$appHeader.height();
+				var footerHeight = _this.app.els.$appFooter.height();
+				var winWidth = window.innerWidth;
+				var winHeight = window.innerHeight - headerHeight - footerHeight;
+				
+				_this.els._$parent.css({
+					height: winHeight + 'px'
+				});
+
+				_this.els.$logo.css({
+					left: Math.floor(0.5 * (winWidth - _this.els.$logo.width())) + 'px',
+					top: Math.floor(0.5 * (winHeight - _this.els.$logo.height())) + 'px'
+				});
+
+				_this.els.$mash.css({
+					height: winHeight + 'px'
+				});
+
 				if (typeof _this.els.$video !== 'undefined') {
-					var headerHeight = _this.app.els.$appHeader.height();
-					var footerHeight = _this.app.els.$appFooter.height();
 					var videoOriginalWidth = 854;
 					var videoOriginalHeight = 480;
 					var videoRatio = videoOriginalWidth/videoOriginalHeight;
-					var winWidth = window.innerWidth;
-					var winHeight = window.innerHeight - headerHeight - footerHeight;
 					var videoWidth = 0;
 					var videoHeight = 0;
 					var videoDimensionMultiplier = 1.1;
@@ -244,23 +291,10 @@
 						left: 0.5 * (winWidth - videoWidth) + 'px',
 						top: Math.floor(winHeight * 0.5 - videoHeight * 0.5) + 'px'
 					});
-
-					_this.els._$parent.css({
-						height: winHeight + 'px'
-					});
-
-					_this.els.$logo.css({
-						left: Math.floor(0.5 * (winWidth - _this.els.$logo.width())) + 'px',
-						top: Math.floor(0.5 * (winHeight - _this.els.$logo.height())) + 'px'
-					});
-
-					_this.els.$mash.css({
-						height: winHeight + 'px'
-					});
-
-					//Send signal of being resized
-					_this.signals.heroResized.dispatch();
 				}
+
+				//Send signal of being resized
+				_this.signals.heroResized.dispatch();
 			};
 
 			_this.getHeight = function getHeight() {
@@ -276,7 +310,7 @@
 			};
 
 			_this.play = function play() {
-				if(!_this.isPlaying) {
+				if(_this.videoMode && !_this.isPlaying) {
 					_this.els.$playButton.click();
 				}
 			};

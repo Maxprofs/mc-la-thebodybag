@@ -104,6 +104,7 @@
     height: 100%;
     background: $color-header-background;
     z-index: 9000;
+    pointer-events: none;
 }
 
 .video_logo {

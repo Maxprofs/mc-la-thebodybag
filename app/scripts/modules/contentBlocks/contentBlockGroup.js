@@ -77,8 +77,8 @@ define(
 				});
 
 				// Start preloading the contents
-				_setPreloadingMessage(_this.heroContentBlock);
 				_this.heroContentBlock.load();
+				_setPreloadingMessage(_this.heroContentBlock);
 			};
 
 			function _setPreloadingMessage(contentBlock) {
@@ -229,7 +229,9 @@ define(
 				_this.heroContentBlock.play();
 			}
 
-			$(_init());
+			_this.load = function load() {
+				_init();
+			}
 		}
 
 		return ContentBlockGroup;

@@ -70,6 +70,8 @@ define(
 				_this.contentBlockGroup.signals.contentBlockActivated.add(_onContentBlockActivated);
 				_this.contentBlockGroup.signals.heroVideoFinished.add(_onHeroVideoFinished);
 
+				_this.contentBlockGroup.load();
+
 				_this.els.$logo.on('click', _onHeaderLogoClicked);
 
 				// Handle app scrolling
