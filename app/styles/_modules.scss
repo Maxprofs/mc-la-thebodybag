@@ -62,19 +62,48 @@
     margin-bottom: 25px;
     margin-left: $site-margin;
     font-size: 80%;
+    
+    a {
+        @include transition-property(color);
+        @extend .animation-link;
+
+        &:hover {
+            color: $color-link-active;
+
+            .icon {
+                opacity: 0;
+            }
+            .icon-active {
+                opacity: 1;   
+            }
+        }
+    }
 
     .rob-logo {
         display: inline-block;
         position: relative;
         overflow: hidden;
-        width: 20px;
+        width: 19px;
         height: 20px;
         top: 4px;
         left: 4px;
         line-height: 100000px;
         text-indent: 100000px;
         background-repeat: no-repeat;
-        @include retina-image("../images/inline/rob-pataki-logo", 20px 20px);
+
+        .nav_button {
+            width: 100%;
+            height: 100%;
+
+            .icon {
+                background-size: cover;
+                background-image: inline-image("inline/svg/rob-pataki-logo.svg");
+            }
+            .icon-active {
+                background-size: cover;
+                background-image: inline-image("inline/svg/rob-pataki-logo-active.svg");
+            }
+        }
     }
 }
 
