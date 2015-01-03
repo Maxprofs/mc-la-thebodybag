@@ -57,7 +57,7 @@ module.exports = function (grunt) {
       },
       compass: {
         files: ['<%= config.app %>/styles/{,*/}{,*/}{,*/}*.{scss,sass}'],
-        tasks: ['compass:server', 'autoprefixer']
+        tasks: ['compass:server']
       },
       livereload: {
         options: {
@@ -182,21 +182,6 @@ module.exports = function (grunt) {
           run: true,
           urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
         }
-      }
-    },
-
-    // Add vendor prefixed styles
-    autoprefixer: {
-      options: {
-        browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1']
-      },
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '.tmp/styles/',
-          src: '{,*/}*.css',
-          dest: '.tmp/styles/'
-        }]
       }
     },
 
@@ -465,7 +450,6 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'requirejs:dev',
-      'autoprefixer',
       'connect:livereload',
       'watch'
     ]);
@@ -481,7 +465,6 @@ module.exports = function (grunt) {
       grunt.task.run([
         'clean:server',
         'concurrent:test',
-        'autoprefixer'
       ]);
     }
 
@@ -498,7 +481,6 @@ module.exports = function (grunt) {
     'concurrent:dist',
     'requirejs:dist',
     'concat:copyright',
-    'autoprefixer',
     'copy:dist',
     'rev',
     'usemin',
