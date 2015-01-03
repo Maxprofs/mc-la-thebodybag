@@ -65,9 +65,12 @@ define(
             };
 
             _this.hide = function hide(delay) {
+                var d = delay;
+                TweenMax.to(_this.els.$title, 1.2, {y: 30, opacity: 0, ease: Expo.easeOut, delay: d});
+                TweenMax.to(_this.els.$message, 1.2, {y: -30, opacity: 0, ease: Expo.easeOut, delay: d + 0.1});
                 TweenMax.to(_this.els.$preloader, 0.4, {opacity: 0, onComplete: function(){
                     _this.signals.hidden.dispatch();
-                }, delay: delay});
+                }, delay: d + 0.2});
             };
 
             _this.show = function show() {
