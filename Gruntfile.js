@@ -332,12 +332,50 @@ module.exports = function (grunt) {
     //     }
     //   }
     // },
+    
+    uglify: {
+      dev: {
+        options: {
+          mangle: false,
+          compress: false,
+          beaufify: {
+            indent_start: 0,
+            indent_level: 4,
+            beaufity: true
+          },
+          preserveComments: true
+        },
+        files: {          
+          '.tmp/scripts/header.js': [
+            '<%= config.app %>/scripts/helper.js'
+          ]
+        }
+      },
+      dist: {
+        options: {
+          mangle: true,
+          compress: true,
+          beaufify: false,
+          preserveComments: false
+        },
+        files: {          
+          '<%= config.dist %>/scripts/header.js': [
+            '<%= config.app %>/scripts/helper.js'
+          ]
+        }
+      }
+    },
+
     concat: {
       copyright: {
         files: {
           '<%= config.dist %>/scripts/application.js': [
             '<%= config.app %>/scripts/copyright.js',
             '<%= config.dist %>/scripts/application.js'
+          ],
+          '<%= config.dist %>/scripts/header.js': [
+            '<%= config.app %>/scripts/copyright.js',
+            '<%= config.dist %>/scripts/header.js'
           ],
           '<%= config.dist %>/styles/application.css': [
             '<%= config.app %>/scripts/copyright.js',
@@ -404,6 +442,7 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
+      'uglify:dev',
       'requirejs:dev',
       'connect:livereload',
       'watch'
@@ -420,6 +459,7 @@ module.exports = function (grunt) {
     'wiredep',
     'useminPrepare',
     'concurrent:dist',
+    'uglify:dist',
     'requirejs:dist',
     'concat:copyright',
     'copy:dist',
