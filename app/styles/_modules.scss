@@ -56,24 +56,25 @@
 	z-index: 3000;
 	@extend .is-selection-disabled;
 }
-.footer_voomad {
+.footer_rob {
 	display: inline-block;
 	float: left;
     margin-bottom: 25px;
     margin-left: $site-margin;
     font-size: 80%;
 
-    .voom-logo {
+    .rob-logo {
         display: inline-block;
         position: relative;
         overflow: hidden;
-        width: 64px;
+        width: 20px;
         height: 20px;
-        top: 6px;
+        top: 4px;
+        left: 4px;
         line-height: 100000px;
         text-indent: 100000px;
-        
-        @include retina-image("../images/inline/voom-logo", 64px 20px);
+        background-repeat: no-repeat;
+        @include retina-image("../images/inline/rob-pataki-logo", 20px 20px);
     }
 }
 
